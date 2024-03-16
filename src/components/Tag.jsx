@@ -2,7 +2,7 @@ export default function Tag(props) {
 
   return (
     <button
-      className="btn m-2 btn-tag text-light fw-bold"
+      className="btn m-2 btn-tag text-dark shadow-sm tag fw-bold"
       style={{ backgroundColor: props.color }}
       onClick={() => {
         props.onClick(props.name);

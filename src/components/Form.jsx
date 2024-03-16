@@ -80,51 +80,65 @@ export default function Form({ factList, setFactList, setShowForm }) {
 
   const optionList = CATEGORIES.map((cat) => {
     return (
-      <option key={cat.name} value={`${cat.name}`}>
-        {cat.name.toUpperCase()}
+      <option key={cat.name} value={`${cat.name}`} className="text-capitalize">
+        {cat.name}
       </option>
     );
   });
 
   return (
-    <div className="container">
-      <form
-        className="container bg-secondary p-3 d-flex align-items-center justify-content-center gap-4 rounded mb-3"
-        action=""
-        onSubmit={handlePost}
-      >
-        <input
-          type="text"
-          value={formData.fact}
-          name="fact"
-          onChange={handleChange}
-          className="form-control"
-          placeholder="Share a fact..."
-        />
-        <span style={{ color: 20 - wordCount === 0 ? "red" : "" }}>
-          {20 - wordCount}
-        </span>
-        <input
-          type="text"
-          value={formData.source}
-          name="source"
-          onChange={handleChange}
-          className="form-control"
-          placeholder="Trustworthy Source"
-        />
-        <select
-          className="form-select"
-          aria-label="Default select example"
-          value={formData.category}
-          name="category"
-          onChange={handleChange}
-        >
-          <option defaultValue>Chooose Category</option>
-          {optionList}
-        </select>
-        <button disabled={isUploading} className="btn btn-light fw-bold">
-          {isUploading ? "Uploading..." : "Post"}
-        </button>
+    <div className="">
+      <form className="p-3 mb-3" action="" onSubmit={handlePost}>
+        <div className="row">
+          <div className="col-6 ">
+            <div class="form-floating">
+              <textarea
+                type="text"
+                value={formData.fact}
+                name="fact"
+                onChange={handleChange}
+                className="form-control"
+                id="floatingTextarea2"
+                style={{height: "150px"}}
+              />
+              <label for="floatingTextarea2">Share a fact</label>
+            </div>
+
+            <span style={{ color: 20 - wordCount === 0 ? "red" : "" }}>
+              {20 - wordCount}
+            </span>
+          </div>
+
+          <div className="col-6">
+            <input
+              type="text"
+              value={formData.source}
+              name="source"
+              onChange={handleChange}
+              className="form-control mb-3"
+              placeholder="Trustworthy Source"
+            />
+            <select
+              className="form-select mb-3"
+              aria-label="Default select example"
+              value={formData.category}
+              name="category"
+              onChange={handleChange}
+            >
+              <option defaultValue className="text-secondary">
+                Chooose Category
+              </option>
+              {optionList}
+            </select>
+            <button
+              disabled={isUploading}
+              className="btn btn-dark fw-bold"
+              style={{ width: "120px" }}
+            >
+              {isUploading ? "Uploading..." : "Post"}
+            </button>
+          </div>
+        </div>
       </form>
     </div>
   );

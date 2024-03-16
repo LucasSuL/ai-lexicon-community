@@ -2,6 +2,8 @@ import Header from "./components/Header";
 import Main from "./components/Main.jsx";
 import { useState, useEffect } from "react";
 import supabase from "./database.js";
+import Feature from "./components/Feature.jsx";
+import Footer from "./components/Footer.jsx";
 
 function App() {
   const [factList, setFactList] = useState([]);
@@ -12,7 +14,7 @@ function App() {
   useEffect(() => {
     const getFacts = async () => {
       try {
-        setIsLoaded(false)
+        setIsLoaded(false);
         let query = supabase.from("facts").select("*");
 
         if (selectedCategory !== "all") {
@@ -38,14 +40,16 @@ function App() {
   }, [selectedCategory]);
 
   return (
-    <div>
-      <Header setFactList={setFactList} factList={factList} />
+    <div className="">
+      <Header />
+      <Feature setFactList={setFactList} factList={factList} />
       <Main
         factList={factList}
         setFactList={setFactList}
         isLoaded={isLoaded}
         setSelectedCategory={setSelectedCategory}
       />
+      <Footer />
     </div>
   );
 }

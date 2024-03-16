@@ -31,14 +31,14 @@ export default function Fact({ fact, setFactList }) {
     fact.votesFalse >= 5 && fact.votesFalse > fact.votesInteresting;
 
   return (
-    <div className="bg-secondary p-2 m-2 mb-3 d-flex align-items-center justify-content-between rounded row">
-      <div className="p-2 col-7  pe-3">
+    <div className="bg-white shadow p-2 m-2 mb-3 d-flex align-items-center justify-content-between rounded row">
+      <div className="p-2 col-7 pe-3">
         {isDisputed ? (
           <span className="text-danger fw-bold">[⛔️ DISPUTED] </span>
         ) : (
           ""
         )}
-        {fact.text}.
+        {fact.text}
         <a href={fact.source} className="source ms-1" target="_blank">
           (Source)
         </a>
@@ -49,27 +49,30 @@ export default function Fact({ fact, setFactList }) {
       >
         {fact.category}
       </div>
-      <div className="vote-buttons d-flex justify-content-end p-0 align-items-center col-3 ">
+      <div className="vote-buttons d-flex justify-content-end gap-2 p-0 align-items-center col-3 ">
         <button
-          className="btn btn-light d-flex align-items-center m-1 p-1"
+          className="btn btn-light d-flex align-items-center m-1 p-1 shadow-sm"
           onClick={() => handleVote("votesInteresting")}
           disabled={isVoting}
+          style={{width:"50px"}}
         >
           👍
-          <strong className="count">{fact.votesInteresting}</strong>
+          <strong className="count m-0 border">{fact.votesInteresting}</strong>
         </button>
         <button
-          className="btn btn-light d-flex align-items-center m-1 p-1"
+          className="btn btn-light d-flex align-items-center m-1 p-1 shadow-sm"
           onClick={() => handleVote("votesMindblowing")}
           disabled={isVoting}
+          style={{width:"50px"}}
         >
           🤯
           <strong className="count">{fact.votesMindblowing}</strong>
         </button>
         <button
-          className="btn btn-light d-flex align-items-center m-1 p-1"
+          className="btn btn-light d-flex align-items-center m-1 p-1 shadow-sm"
           onClick={() => handleVote("votesFalse")}
           disabled={isVoting}
+          style={{width:"50px"}}
         >
           ⛔️
           <strong className="count">{fact.votesFalse}</strong>

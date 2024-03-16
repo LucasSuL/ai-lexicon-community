@@ -1,13 +1,13 @@
 {
   "CATEGORIES": [
-    { "name": "technology", "color": "#3b82f6" },
-    { "name": "science", "color": "#16a34a" },
-    { "name": "finance", "color": "#ef4444" },
-    { "name": "society", "color": "#eab308" },
-    { "name": "entertainment", "color": "#db2777" },
-    { "name": "health", "color": "#14b8a6" },
-    { "name": "history", "color": "#f97316" },
-    { "name": "news", "color": "#8b5cf6" }
+    { "name": "technology", "color": "#57c4ff31" },
+    { "name": "science", "color": "#da85c731" },
+    { "name": "finance", "color": "#7fb88133" },
+    { "name": "society", "color": "#ff795736" },
+    { "name": "entertainment", "color": "#ffb04f45" },
+    { "name": "health", "color": "#5e4fff31" },
+    { "name": "history", "color": "#ff84cc31" },
+    { "name": "news", "color": "#a833ff31" }
   ],
 
   "initialFacts": [
