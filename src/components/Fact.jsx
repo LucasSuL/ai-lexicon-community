@@ -54,7 +54,7 @@ export default function Fact({ fact, setFactList }) {
           className="btn btn-light d-flex align-items-center m-1 p-1 shadow-sm"
           onClick={() => handleVote("votesInteresting")}
           disabled={isVoting}
-          style={{width:"50px"}}
+          style={{ width: "50px" }}
         >
           👍
           <strong className="count m-0 border">{fact.votesInteresting}</strong>
@@ -63,7 +63,7 @@ export default function Fact({ fact, setFactList }) {
           className="btn btn-light d-flex align-items-center m-1 p-1 shadow-sm"
           onClick={() => handleVote("votesMindblowing")}
           disabled={isVoting}
-          style={{width:"50px"}}
+          style={{ width: "50px" }}
         >
           🤯
           <strong className="count">{fact.votesMindblowing}</strong>
@@ -72,7 +72,7 @@ export default function Fact({ fact, setFactList }) {
           className="btn btn-light d-flex align-items-center m-1 p-1 shadow-sm"
           onClick={() => handleVote("votesFalse")}
           disabled={isVoting}
-          style={{width:"50px"}}
+          style={{ width: "50px" }}
         >
           ⛔️
           <strong className="count">{fact.votesFalse}</strong>

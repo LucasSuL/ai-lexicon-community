@@ -19,7 +19,7 @@ export default function Content({
   const Loader = () => {
     return [...Array(5)].map(() => (
       <div
-        className="bg-secondary p-2 m-2 mb-3 rounded d-flex align-items-center row"
+        className="bg-light p-2 m-2 mb-3 rounded d-flex align-items-center row"
         key={Math.random() * 1000000}
       >
         <div className="p-2 col-7 pe-3 ">
