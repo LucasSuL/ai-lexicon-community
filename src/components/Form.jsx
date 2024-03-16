@@ -3,15 +3,16 @@ import { CATEGORIES } from "../../data";
 import supabase from "../database.js";
 
 function isValidHttpUrl(string) {
-  let url;
+  // let url;
 
-  try {
-    url = new URL(string);
-  } catch (_) {
-    return false;
-  }
+  // try {
+  //   url = new URL(string);
+  // } catch (_) {
+  //   return false;
+  // }
 
-  return url.protocol === "http:" || url.protocol === "https:";
+  // return url.protocol === "http:" || url.protocol === "https:";
+  return true;
 }
 
 export default function Form({ factList, setFactList, setShowForm }) {
@@ -87,52 +88,83 @@ export default function Form({ factList, setFactList, setShowForm }) {
   });
 
   return (
-    <div className="">
-      <form className="p-3 mb-3" action="" onSubmit={handlePost}>
+    <div className="mt-3">
+      <form
+        className="p-3 mb-3 needs-validation"
+        action=""
+        onSubmit={handlePost}
+        novalidate
+      >
         <div className="row">
           <div className="col-6 ">
-            <div class="form-floating">
+            <div class="">
+              <label htmlFor="fact">Share a Fact...</label>
               <textarea
+                required
                 type="text"
                 value={formData.fact}
                 name="fact"
                 onChange={handleChange}
-                className="form-control"
-                id="floatingTextarea2"
-                style={{height: "150px"}}
+                className="form-control mt-2"
+                style={{ height: "132px" }}
               />
-              <label for="floatingTextarea2">Share a fact</label>
             </div>
 
-            <span style={{ color: 20 - wordCount === 0 ? "red" : "" }}>
+            <div
+              className="mt-2"
+              style={{ color: 20 - wordCount === 0 ? "red" : "" }}
+            >
               {20 - wordCount}
-            </span>
+            </div>
           </div>
 
           <div className="col-6">
-            <input
-              type="text"
-              value={formData.source}
-              name="source"
-              onChange={handleChange}
-              className="form-control mb-3"
-              placeholder="Trustworthy Source"
-            />
-            <select
-              className="form-select mb-3"
-              aria-label="Default select example"
-              value={formData.category}
-              name="category"
-              onChange={handleChange}
-            >
-              <option defaultValue className="text-secondary">
-                Chooose Category
-              </option>
-              {optionList}
-            </select>
+            <div className="mb-4">
+              <label htmlFor="source">Trustworthy Source</label>
+              <div class="input-group">
+                <span class="input-group-text mt-2" id="basic-addon3">
+                  https://
+                </span>
+
+                <input
+                  required
+                  aria-describedby="basic-addon3 basic-addon4"
+                  type="text"
+                  value={formData.source}
+                  name="source"
+                  onChange={handleChange}
+                  className="form-control mt-2"
+                  // placeholder="Trustworthy Source"
+                  id="source"
+                />
+              </div>
+
+              {/* <div id="source-description" className="form-text text-danger">
+                Please provide a valid URL starting with http:// or https://.{" "}
+              </div> */}
+            </div>
+            <div>
+              <label htmlFor="category">Choose Category</label>
+              <select
+                required
+                className="form-select mt-2"
+                aria-label="Default select example"
+                value={formData.category}
+                name="category"
+                onChange={handleChange}
+              >
+                <option disabled value="">
+                  Chooose Category
+                </option>
+                {optionList}
+              </select>
+            </div>
+          </div>
+          <div className="col-12 mt-5">
             <button
+              type="submit"
               disabled={isUploading}
-              className="btn btn-dark fw-bold"
+              className="btn btn-success fw-bold"
               style={{ width: "120px" }}
             >
               {isUploading ? "Uploading..." : "Post"}

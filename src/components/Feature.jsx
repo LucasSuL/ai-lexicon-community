@@ -48,7 +48,7 @@ const Feature = ({ setFactList, factList }) => {
           <p className="m-0">GitHub</p>
         </a>
       </div>
-      <div class="collapse border mt-3 w-100 shadow-sm rounded bg-light" id="collapseExample">
+      <div class="collapse border mt-4 w-100 shadow-sm rounded bg-light" id="collapseExample">
         <Form
           factList={factList}
           setFactList={setFactList}
