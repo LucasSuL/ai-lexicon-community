@@ -74,7 +74,7 @@ export default function Content({
               </div>
             )} */}
           </button>
-          <div className="row m-1 g-2 mb-3">{tags}</div>
+          <div className="row m-0 g-3 mb-3">{tags}</div>
         </div>
         <div className="main col-12 col-xl-10">
           <div className="">
