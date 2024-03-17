@@ -1,12 +1,50 @@
-import React from 'react'
+import React from "react";
 
 const Footer = () => {
   return (
-    <div className='container d-flex justify-content-center mb-5' style={{marginTop:"100px"}}>
-      <p className="text-secondary me-2">A project by</p>
-      <p className='fw-bold'>Lucas Su</p>
+    <div className=" mb-5">
+      <div
+        className="container d-flex justify-content-center"
+        style={{ marginTop: "100px" }}
+      >
+        <p className="text-secondary me-2">A project by</p>
+        <p className="m-0">
+          <a
+            href="https://www.linkedin.com/in/lucassudev/"
+            class="link-dark link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover fw-bold"
+            target="_blank"
+            rel="noreferrer"
+          >
+            Lucas Su
+          </a>
+        </p>
       </div>
-  )
-}
+      <div class="d-flex justify-content-center align-items-center pb-5 ">
+        <span class=" text-secondary text-s-2 me-1">Made with</span>
+        <p className="m-0">
+          <a
+            href="https://getbootstrap.com/"
+            class="link-dark link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover fw-bold"
+            target="_blank"
+            rel="noreferrer"
+          >
+            Bootstrap
+          </a>
+        </p>
+        <p className="m-0 me-1">, </p>
+        <p className="m-0">
+          <a
+            href="https://supabase.com/"
+            class="link-dark link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover fw-bold"
+            target="_blank"
+            rel="noreferrer"
+          >
+            Supabase
+          </a>
+        </p>
+      </div>
+    </div>
+  );
+};
 
-export default Footer
+export default Footer;
