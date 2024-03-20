@@ -3,8 +3,12 @@ import { CATEGORIES } from "../../data.json";
 import supabase from "../database.js";
 import { Link } from "react-router-dom";
 import { useParams } from "react-router-dom";
+// import { useLocation } from "react-router-dom";
 
 export default function SinglePage({ factList, setFactList }) {
+  // const location = useLocation();
+
+  // console.log(location);
   const { id } = useParams();
   const factId = parseInt(id); // Convert id to integer
   const fact = factList.find((fact) => fact.id === factId);
@@ -51,7 +55,7 @@ export default function SinglePage({ factList, setFactList }) {
           Source:
           <a
             href="#"
-            class="link-dark link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover ms-1"
+            className="link-dark link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover ms-1"
           >
             {" "}
             {fact.source}
@@ -74,9 +78,9 @@ export default function SinglePage({ factList, setFactList }) {
 
   const Text = () => {
     return (
-      <div className="d-flex mt-5">
+      <div className="mt-5">
         {isDisputed ? (
-          <span className="text-danger fw-bold">[⛔️ DISPUTED] </span>
+          <div className="text-danger fw-bold mb-2">[⛔️ DISPUTED] </div>
         ) : (
           ""
         )}
