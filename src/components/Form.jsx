@@ -2,20 +2,8 @@ import { useState } from "react";
 import { CATEGORIES } from "../../data";
 import supabase from "../database.js";
 
-function isValidHttpUrl(string) {
-  // let url;
 
-  // try {
-  //   url = new URL(string);
-  // } catch (_) {
-  //   return false;
-  // }
-
-  // return url.protocol === "http:" || url.protocol === "https:";
-  return true;
-}
-
-export default function Form({ factList, setFactList, setShowForm }) {
+export default function Form({ factList, setFactList }) {
   const [wordCount, setWordCount] = useState(0);
   const [isUploading, setIsUploading] = useState(false);
   const [formData, setFormData] = useState({
@@ -41,7 +29,7 @@ export default function Form({ factList, setFactList, setShowForm }) {
     event.preventDefault();
 
     //2-check data is valid or not
-    if (formData.fact && formData.category && isValidHttpUrl(formData.source)) {
+    if (formData.fact && formData.category && formData.source) {
       //3-insert data to supabase
       try {
         setIsUploading(true);
@@ -93,11 +81,11 @@ export default function Form({ factList, setFactList, setShowForm }) {
         className="p-3 mb-3 needs-validation"
         action=""
         onSubmit={handlePost}
-        novalidate
+        noValidate
       >
         <div className="row">
           <div className="col-6 ">
-            <div class="">
+            <div className="">
               <label htmlFor="fact">Share a Fact...</label>
               <textarea
                 required
@@ -121,8 +109,8 @@ export default function Form({ factList, setFactList, setShowForm }) {
           <div className="col-6">
             <div className="mb-4">
               <label htmlFor="source">Trustworthy Source</label>
-              <div class="input-group">
-                <span class="input-group-text mt-2" id="basic-addon3">
+              <div className="input-group">
+                <span className="input-group-text mt-2" id="basic-addon3">
                   https://
                 </span>
 
@@ -134,14 +122,10 @@ export default function Form({ factList, setFactList, setShowForm }) {
                   name="source"
                   onChange={handleChange}
                   className="form-control mt-2"
-                  // placeholder="Trustworthy Source"
                   id="source"
                 />
               </div>
 
-              {/* <div id="source-description" className="form-text text-danger">
-                Please provide a valid URL starting with http:// or https://.{" "}
-              </div> */}
             </div>
             <div>
               <label htmlFor="category">Choose Category</label>

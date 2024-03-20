@@ -1,15 +1,15 @@
-import Header from "./components/Header";
-import Main from "./components/Main.jsx";
+import Header from "./layout/Header";
+import Content from "./layout/Content.jsx";
 import { useState, useEffect } from "react";
 import supabase from "./database.js";
-import Feature from "./components/Feature.jsx";
-import Footer from "./components/Footer.jsx";
+import Feature from "./layout/Feature.jsx";
+import Footer from "./layout/Footer.jsx";
+// import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 
 function App() {
   const [factList, setFactList] = useState([]);
   const [isLoaded, setIsLoaded] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState("all");
-  // const [isFilter, setIsFilter] = useState(false);
 
   useEffect(() => {
     const getFacts = async () => {
@@ -22,7 +22,7 @@ function App() {
         }
 
         let { data: facts, error } = await query
-          // .limit(10)
+          .limit(10)
           .order("votesInteresting", { ascending: false });
 
         if (error) {
@@ -31,7 +31,6 @@ function App() {
 
         setFactList(facts);
         setIsLoaded(true);
-        // setIsFilter(false)
       } catch (error) {
         console.error("Error fetching facts:", error.message);
       }
@@ -40,17 +39,23 @@ function App() {
   }, [selectedCategory]);
 
   return (
-    <div className="">
-      <Header />
-      <Feature setFactList={setFactList} factList={factList} />
-      <Main
-        factList={factList}
-        setFactList={setFactList}
-        isLoaded={isLoaded}
-        setSelectedCategory={setSelectedCategory}
-      />
-      <Footer />
-    </div>
+    // <Router>
+      // <Switch>
+      <div>
+
+        <Header />
+        <Feature setFactList={setFactList} factList={factList} />
+       
+        <Content
+          factList={factList}
+          setFactList={setFactList}
+          isLoaded={isLoaded}
+          setSelectedCategory={setSelectedCategory}
+          />
+        <Footer />
+          </div>
+    //   </Switch>
+    // </Router>
   );
 }
 

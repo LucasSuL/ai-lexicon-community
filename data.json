@@ -1,13 +1,13 @@
 {
   "CATEGORIES": [
-    { "name": "technology", "color": "#57c4ff31" },
-    { "name": "science", "color": "#da85c731" },
-    { "name": "finance", "color": "#7fb88133" },
-    { "name": "society", "color": "#ff795736" },
-    { "name": "entertainment", "color": "#ffb04f45" },
-    { "name": "health", "color": "#5e4fff31" },
-    { "name": "history", "color": "#ff84cc31" },
-    { "name": "news", "color": "#a833ff31" }
+    { "name": "Machine Learning", "color": "#57c4ff31" },
+    { "name": "Reinforcement Learning", "color": "#da85c731" },
+    { "name": "Computer Vision", "color": "#7fb88133" },
+    { "name": "Expert Systems", "color": "#ff795736" },
+    { "name": "Speech Recognition", "color": "#ffb04f45" },
+    { "name": "Robotics", "color": "#5e4fff31" },
+    { "name": "Natural Language Processing", "color": "#ff84cc31" },
+    { "name": "AI Ethics and Societal Impact", "color": "#a833ff31" }
   ],
 
   "initialFacts": [
@@ -15,7 +15,7 @@
       "id": 1,
       "text": "React is being developed by Meta (formerly facebook)",
       "source": "https://opensource.fb.com/",
-      "category": "technology",
+      "category": "Machine Learning",
       "votesInteresting": 24,
       "votesMindblowing": 9,
       "votesFalse": 4,

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import Form from "./Form";
+import Form from "../components/Form";
 
 const Feature = ({ setFactList, factList }) => {
   const [showForm, setShowForm] = useState(false);
@@ -11,19 +11,21 @@ const Feature = ({ setFactList, factList }) => {
   return (
     <div className="container d-flex flex-column align-items-center">
       <div
-        className="display-2 fw-medium mt-5 d-flex flex-column align-items-center"
+        className="display-2 fw-medium mt-5 d-flex flex-column align-items-center text-center"
         style={{ maxWidth: "1100px" }}
       >
-        <strong className="cust-title ">Hey! Lucas here! </strong>
+        <strong className="cust-title">
+          Your Multi-language Collaborative Dictionary
+        </strong>
         <p className="mt-3 fs-3 text-secondary">
-          Discover my stories and ideas!
+          A next generation online translating platform of new AI terms!
         </p>
       </div>
 
       <div className="mt-3 d-flex gap-3">
         <button
           type="button"
-          class="btn w-3 text-light"
+          className="btn w-3 text-light"
           data-bs-toggle="collapse"
           data-bs-target="#collapseExample"
           aria-expanded="false"
@@ -31,14 +33,14 @@ const Feature = ({ setFactList, factList }) => {
           onClick={() => handleShowForm()}
           style={{
             backgroundColor: showForm ? "#ef4444" : "#198754",
-            width: "120px",
+            width: "160px",
           }}
         >
-          {showForm ? "Close" : "Share a Fact"}
+          {showForm ? "Close" : "Share Translation"}
         </button>
         <a
-          class="btn btn-dark d-flex align-items-center justify-content-center"
-          style={{ width: "120px" }}
+          className="btn btn-dark d-flex align-items-center justify-content-center"
+          style={{ width: "160px" }}
           href="https://github.com/LucasSuL/today-i-learned"
           target="_blank"
           rel="noreferrer"
@@ -48,7 +50,10 @@ const Feature = ({ setFactList, factList }) => {
           <p className="m-0">GitHub</p>
         </a>
       </div>
-      <div class="collapse border mt-4 w-100 shadow-sm rounded bg-light" id="collapseExample">
+      <div
+        className="collapse border mt-4 w-100 shadow-sm rounded bg-light"
+        id="collapseExample"
+      >
         <Form
           factList={factList}
           setFactList={setFactList}

@@ -11,7 +11,7 @@ const Footer = () => {
         <p className="m-0">
           <a
             href="https://www.linkedin.com/in/lucassudev/"
-            class="link-dark link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover fw-bold"
+            className="link-dark link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover fw-bold"
             target="_blank"
             rel="noreferrer"
           >
@@ -19,12 +19,12 @@ const Footer = () => {
           </a>
         </p>
       </div>
-      <div class="d-flex justify-content-center align-items-center pb-5 ">
-        <span class=" text-secondary text-s-2 me-1">Made with</span>
+      <div className="d-flex justify-content-center align-items-center pb-5 ">
+        <span className=" text-secondary text-s-2 me-1">Made with</span>
         <p className="m-0">
           <a
             href="https://getbootstrap.com/"
-            class="link-dark link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover fw-bold"
+            className="link-dark link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover fw-bold"
             target="_blank"
             rel="noreferrer"
           >
@@ -35,7 +35,7 @@ const Footer = () => {
         <p className="m-0">
           <a
             href="https://supabase.com/"
-            class="link-dark link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover fw-bold"
+            className="link-dark link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover fw-bold"
             target="_blank"
             rel="noreferrer"
           >

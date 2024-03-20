@@ -25,13 +25,13 @@ export default function Fact({ fact, setFactList }) {
   const categoryObject = CATEGORIES.find(
     (category) => category.name === fact.category
   );
-  const categoryColor = categoryObject ? categoryObject.color : "#000"; // Default color if category not found
+  const categoryColor = categoryObject ? categoryObject.color : "#cccccc"; // Default color if category not found
 
   const isDisputed =
     fact.votesFalse >= 5 && fact.votesFalse > fact.votesInteresting;
 
   return (
-    <div className="bg-white shadow p-2 m-2 mb-3 d-flex align-items-center justify-content-between rounded row">
+    <div className="bg-white shadow p-2 m-2 mb-4 d-flex align-items-center justify-content-between rounded row">
       <div className="p-2 col-12 col-lg-7 pe-3">
         {isDisputed ? (
           <span className="text-danger fw-bold">[⛔️ DISPUTED] </span>

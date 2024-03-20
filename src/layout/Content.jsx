@@ -1,6 +1,7 @@
 import { CATEGORIES } from "../../data";
-import Tag from "./Tag";
-import Fact from "./Fact";
+import { BrowserRouter as Router, Route, Link } from "react-router-dom";
+import Tag from "../components/Tag";
+import Fact from "../components/Fact";
 
 export default function Content({
   factList,
@@ -15,6 +16,8 @@ export default function Content({
   const handleAllClick = () => {
     setSelectedCategory("all"); // Reset filter to show all facts
   };
+
+  const handleFactClick = () => {};
 
   const Loader = () => {
     return [...Array(5)].map(() => (
@@ -41,7 +44,7 @@ export default function Content({
 
   const facts = isLoaded ? (
     factList.map((fact) => {
-      return <Fact key={fact.id} fact={fact} setFactList={setFactList} />;
+      return <Fact key = {fact.id} fact={fact} setFactList={setFactList} />;
     })
   ) : (
     <Loader />
@@ -68,24 +71,17 @@ export default function Content({
             onClick={handleAllClick}
           >
             All
-            {/* {!isLoaded && (
-              <div class="spinner-border spinner-border-sm ms-2" role="status">
-                <span class="visually-hidden">Loading...</span>
-              </div>
-            )} */}
           </button>
           <div className="row m-0 g-3 mb-3">{tags}</div>
         </div>
         <div className="main col-12 col-xl-10">
-          <div className="">
-            {facts.length == 0 ? (
-              <p className="">
-                No facts for this category, create your first one!
-              </p>
-            ) : (
-              facts
-            )}
-          </div>
+          {facts.length == 0 ? (
+            <p className="">
+              No facts for this category, create your first one!
+            </p>
+          ) : (
+            facts
+          )}
         </div>
       </div>
     </div>

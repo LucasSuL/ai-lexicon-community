@@ -67,22 +67,11 @@ h1 {
 }
 
 .btn-all {
-  /* background: linear-gradient(
-    -45deg,
-    violet,
-    indigo,
-    blue,
-    green,
-    yellow,
-    orange,
-    red
-  ); */
-
   border: none;
-  transition: transform 0.3s ease;
+  transition: transform 0.2s ease;
 }
 .btn-tag {
-  transition: transform 0.3s ease;
+  transition: transform 0.2s ease;
 }
 
 .btn-all:hover,
