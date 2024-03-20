@@ -1,7 +1,7 @@
 import { CATEGORIES } from "../../data";
-import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 import Tag from "../components/Tag";
 import Fact from "../components/Fact";
+import Feature from "./Feature";
 
 export default function Content({
   factList,
@@ -16,8 +16,6 @@ export default function Content({
   const handleAllClick = () => {
     setSelectedCategory("all"); // Reset filter to show all facts
   };
-
-  const handleFactClick = () => {};
 
   const Loader = () => {
     return [...Array(5)].map(() => (
@@ -44,7 +42,7 @@ export default function Content({
 
   const facts = isLoaded ? (
     factList.map((fact) => {
-      return <Fact key = {fact.id} fact={fact} setFactList={setFactList} />;
+      return <Fact key={fact.id} fact={fact} setFactList={setFactList} />;
     })
   ) : (
     <Loader />
@@ -57,31 +55,33 @@ export default function Content({
         name={category.name}
         color={category.color}
         onClick={handleTagClick}
-        isLoaded={isLoaded}
       />
     );
   });
 
   return (
-    <div className="container mt-5">
-      <div className="row">
-        <div className="tags col-12 col-xl-2 d-flex flex-column">
-          <button
-            className="btn btn-all m-2 tag text-light fw-bold mb-3 text-bg-dark shadow"
-            onClick={handleAllClick}
-          >
-            All
-          </button>
-          <div className="row m-0 g-3 mb-3">{tags}</div>
-        </div>
-        <div className="main col-12 col-xl-10">
-          {facts.length == 0 ? (
-            <p className="">
-              No facts for this category, create your first one!
-            </p>
-          ) : (
-            facts
-          )}
+    <div className="container">
+      <Feature setFactList={setFactList} factList={factList} />
+      <div className="mt-5">
+        <div className="row">
+          <div className="tags col-12 col-xl-2 d-flex flex-column">
+            <button
+              className="btn btn-all m-2 tag text-light fw-bold mb-3 text-bg-dark shadow"
+              onClick={handleAllClick}
+            >
+              All
+            </button>
+            <div className="row m-0 g-3 mb-3">{tags}</div>
+          </div>
+          <div className="main col-12 col-xl-10">
+            {facts.length == 0 ? (
+              <p className="">
+                No facts for this category, create your first one!
+              </p>
+            ) : (
+              facts
+            )}
+          </div>
         </div>
       </div>
     </div>

@@ -2,9 +2,10 @@ import Header from "./layout/Header";
 import Content from "./layout/Content.jsx";
 import { useState, useEffect } from "react";
 import supabase from "./database.js";
-import Feature from "./layout/Feature.jsx";
 import Footer from "./layout/Footer.jsx";
-// import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import { BrowserRouter as Router, Route } from "react-router-dom";
+import { Routes } from "react-router-dom";
+import SinglePage from "./components/SinglePage.jsx";
 
 function App() {
   const [factList, setFactList] = useState([]);
@@ -39,23 +40,31 @@ function App() {
   }, [selectedCategory]);
 
   return (
-    // <Router>
-      // <Switch>
-      <div>
-
-        <Header />
-        <Feature setFactList={setFactList} factList={factList} />
-       
-        <Content
-          factList={factList}
-          setFactList={setFactList}
-          isLoaded={isLoaded}
-          setSelectedCategory={setSelectedCategory}
-          />
-        <Footer />
-          </div>
-    //   </Switch>
-    // </Router>
+    <Router>
+      <Header />
+      <Routes>
+        <Route
+          path="/today-i-learned"
+          element={
+            <Content
+              factList={factList}
+              setFactList={setFactList}
+              isLoaded={isLoaded}
+              setSelectedCategory={setSelectedCategory}
+            />
+          }
+        ></Route>
+        {isLoaded && factList.length > 0 && (
+          <Route
+            path="/today-i-learned/entries/:id"
+            element={
+              <SinglePage factList={factList} setFactList={setFactList} />
+            }
+          ></Route>
+        )}
+      </Routes>
+      <Footer />
+    </Router>
   );
 }
 

@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { CATEGORIES } from "../../data";
 import supabase from "../database.js";
+import { Link } from "react-router-dom";
 
 export default function Fact({ fact, setFactList }) {
   const [isVoting, setIsVoting] = useState(false);
@@ -38,7 +39,13 @@ export default function Fact({ fact, setFactList }) {
         ) : (
           ""
         )}
-        {fact.text}
+        <Link
+          style={{ color: "inherit", textDecoration: "inherit" }}
+          to={`/today-i-learned/entries/${fact.id}`}
+        >
+          {fact.text}
+        </Link>
+
         <a href={fact.source} className="source ms-1" target="_blank">
           (Source)
         </a>

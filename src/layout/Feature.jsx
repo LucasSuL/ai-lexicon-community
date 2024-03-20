@@ -22,7 +22,7 @@ const Feature = ({ setFactList, factList }) => {
         </p>
       </div>
 
-      <div className="mt-3 d-flex gap-3">
+      <div className="mt-5 d-flex gap-3">
         <button
           type="button"
           className="btn w-3 text-light"
