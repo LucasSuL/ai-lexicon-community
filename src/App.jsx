@@ -7,7 +7,7 @@ import { BrowserRouter as Router, Route } from "react-router-dom";
 import { Routes } from "react-router-dom";
 import SinglePage from "./components/SinglePage.jsx";
 import PostContext from "./provider/PostContext.jsx";
-
+import ScrollToTop from "./hook/ScrollToTop.jsx";
 
 function App() {
   const [factList, setFactList] = useState([]);
@@ -51,15 +51,14 @@ function App() {
       }}
     >
       <Router>
+        <ScrollToTop />
         <Header />
         <Routes>
           <Route path="/today-i-learned" element={<Content />}></Route>
           {isLoaded && factList.length > 0 && (
             <Route
               path="/today-i-learned/entries/:id"
-              element={
-                <SinglePage />
-              }
+              element={<SinglePage />}
             ></Route>
           )}
         </Routes>

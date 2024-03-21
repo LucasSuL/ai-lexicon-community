@@ -50,8 +50,8 @@ export default function SinglePage() {
 
   const Source = () => {
     return (
-      <div className="d-flex mt-3">
-        <p>
+      <div className="d-flex mt-3 border">
+        <p className="w-100">
           Source:
           <a
             href="#"
