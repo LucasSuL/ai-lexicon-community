@@ -1,14 +1,14 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { CATEGORIES } from "../../data.json";
 import supabase from "../database.js";
 import { Link } from "react-router-dom";
 import { useParams } from "react-router-dom";
-// import { useLocation } from "react-router-dom";
+import PostContext from "../provider/PostContext";
 
-export default function SinglePage({ factList, setFactList }) {
-  // const location = useLocation();
+export default function SinglePage() {
 
-  // console.log(location);
+  const { factList, setFactList } = useContext(PostContext);
+
   const { id } = useParams();
   const factId = parseInt(id); // Convert id to integer
   const fact = factList.find((fact) => fact.id === factId);
