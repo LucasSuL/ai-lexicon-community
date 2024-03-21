@@ -50,12 +50,12 @@ export default function SinglePage() {
 
   const Source = () => {
     return (
-      <div className="d-flex mt-3 border">
+      <div className="d-flex mt-3 text-secondary">
         <p className="w-100">
-          Source:
+          <strong>Source:</strong>
           <a
             href="#"
-            className="link-dark link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover ms-1"
+            className="link-secondary link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover ms-1"
           >
             {" "}
             {fact.source}
@@ -104,7 +104,7 @@ export default function SinglePage() {
 
   const Votes = () => {
     return (
-      <div className="vote-buttons d-flex justify-content-start gap-3 align-items-center mb-3">
+      <div className="vote-buttons d-flex justify-content-start gap-3 align-items-center mb-3 mt-3">
         <button
           className="btn btn-light d-flex align-items-center justify-content-center gap-1 shadow-sm"
           onClick={() => handleVote("votesInteresting")}

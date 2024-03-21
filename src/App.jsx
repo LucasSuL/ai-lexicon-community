@@ -53,6 +53,7 @@ function App() {
       <Router>
         <ScrollToTop />
         <Header />
+
         <Routes>
           <Route path="/today-i-learned" element={<Content />}></Route>
           {isLoaded && factList.length > 0 && (
