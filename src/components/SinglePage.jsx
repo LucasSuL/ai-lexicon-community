@@ -93,7 +93,7 @@ export default function SinglePage() {
     return (
       <div className="mt-5 text-secondary">
         <Link
-          to="/today-i-learned/"
+          to="/ai-lexicon-community/"
           style={{ color: "inherit", textDecoration: "inherit" }}
         >
           {'\u2190 '}Back to Home

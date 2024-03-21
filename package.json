@@ -1,8 +1,9 @@
 {
-  "name": "today-i-learned",
+  "name": "ai-lexicon-community",
   "private": true,
   "version": "0.0.0",
   "type": "module",
+  "homepage": "https://lucassul.github.io/ai-lexicon-community/",
   "scripts": {
     "dev": "vite",
     "build": "vite build",

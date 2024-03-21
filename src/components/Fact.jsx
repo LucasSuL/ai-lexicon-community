@@ -41,7 +41,7 @@ export default function Fact({ fact, setFactList }) {
         )}
         <Link
           style={{ color: "inherit", textDecoration: "inherit" }}
-          to={`/today-i-learned/entries/${fact.id}`}
+          to={`/ai-lexicon-community/entries/${fact.id}`}
         >
           {fact.text}
         </Link>

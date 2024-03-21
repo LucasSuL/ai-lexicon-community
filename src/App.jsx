@@ -55,10 +55,10 @@ function App() {
         <Header />
 
         <Routes>
-          <Route path="/today-i-learned" element={<Content />}></Route>
+          <Route path="/ai-lexicon-community/" element={<Content />}></Route>
           {isLoaded && factList.length > 0 && (
             <Route
-              path="/today-i-learned/entries/:id"
+              path="/ai-lexicon-community/entries/:id"
               element={<SinglePage />}
             ></Route>
           )}

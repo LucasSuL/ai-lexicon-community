@@ -41,7 +41,7 @@ const Feature = ({ setFactList, factList }) => {
         <a
           className="btn btn-dark d-flex align-items-center justify-content-center"
           style={{ width: "160px" }}
-          href="https://github.com/LucasSuL/today-i-learned"
+          href="https://github.com/LucasSuL/ai-lexicon-community"
           target="_blank"
           rel="noreferrer"
           role="button"
