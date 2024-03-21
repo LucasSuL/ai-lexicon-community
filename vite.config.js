@@ -3,8 +3,10 @@ import react from "@vitejs/plugin-react";
 
 export default defineConfig({
   plugins: [react()],
-  base: "/today-i-learned/",
+  base: "/ai-lexicon-community/",
   // server: {
-  //   port: 5173,
+  //   watch:{
+  //     usePolling:true,
+  //   }
   // },
 });
