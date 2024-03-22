@@ -6,14 +6,14 @@ import { useParams } from "react-router-dom";
 import PostContext from "../provider/PostContext";
 
 export default function SinglePage() {
-
   const { factList, setFactList } = useContext(PostContext);
+
+  const [isVoting, setIsVoting] = useState(false);
 
   const { id } = useParams();
   const factId = parseInt(id); // Convert id to integer
   const fact = factList.find((fact) => fact.id === factId);
 
-  const [isVoting, setIsVoting] = useState(false);
   const handleVote = async (type) => {
     setIsVoting(true);
     const { data: updatedFact, error } = await supabase
@@ -96,7 +96,7 @@ export default function SinglePage() {
           to="/ai-lexicon-community/"
           style={{ color: "inherit", textDecoration: "inherit" }}
         >
-          {'\u2190 '}Back to Home
+          {"\u2190 "}Back to Home
         </Link>
       </div>
     );

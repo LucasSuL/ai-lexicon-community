@@ -7,7 +7,7 @@ import PostContext from "../provider/PostContext";
 import Loader from "../components/Loader";
 
 export default function Content() {
-  const { factList, setFactList, isLoaded, setSelectedCategory } = useContext(PostContext);
+  const { factList, isLoaded, setSelectedCategory } = useContext(PostContext);
 
   const handleTagClick = (categoryName) => {
     setSelectedCategory(categoryName);
@@ -19,7 +19,7 @@ export default function Content() {
 
   const facts = isLoaded ? (
     factList.map((fact) => {
-      return <Fact key={fact.id} fact={fact} setFactList={setFactList} />;
+      return <Fact key={fact.id} fact={fact} />;
     })
   ) : (
     <Loader />
@@ -38,7 +38,7 @@ export default function Content() {
 
   return (
     <div className="container">
-      <Feature setFactList={setFactList} factList={factList} />
+      <Feature />
       <div className="mt-5">
         <div className="row">
           <div className="tags col-12 col-xl-2 d-flex flex-column">

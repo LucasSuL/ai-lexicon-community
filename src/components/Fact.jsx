@@ -2,8 +2,12 @@ import React, { useState } from "react";
 import { CATEGORIES } from "../../data";
 import supabase from "../database.js";
 import { Link } from "react-router-dom";
+import { useContext } from "react";
+import PostContext from "../provider/PostContext";
 
-export default function Fact({ fact, setFactList }) {
+export default function Fact({ fact }) {
+  const { setFactList } = useContext(PostContext);
+
   const [isVoting, setIsVoting] = useState(false);
   const handleVote = async (type) => {
     setIsVoting(true);

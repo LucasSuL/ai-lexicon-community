@@ -1,9 +1,12 @@
 import { useState } from "react";
 import { CATEGORIES } from "../../data";
 import supabase from "../database.js";
+import { useContext } from "react";
+import PostContext from "../provider/PostContext";
 
+export default function Form() {
+  const { factList, setFactList } = useContext(PostContext);
 
-export default function Form({ factList, setFactList }) {
   const [wordCount, setWordCount] = useState(0);
   const [isUploading, setIsUploading] = useState(false);
   const [formData, setFormData] = useState({
@@ -125,7 +128,6 @@ export default function Form({ factList, setFactList }) {
                   id="source"
                 />
               </div>
-
             </div>
             <div>
               <label htmlFor="category">Choose Category</label>

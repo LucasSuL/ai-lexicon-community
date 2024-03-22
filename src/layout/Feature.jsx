@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import Form from "../components/Form";
 
-const Feature = ({ setFactList, factList }) => {
+const Feature = () => {
   const [showForm, setShowForm] = useState(false);
 
   const handleShowForm = () => {
@@ -54,11 +54,7 @@ const Feature = ({ setFactList, factList }) => {
         className="collapse border mt-4 w-100 shadow-sm rounded bg-light"
         id="collapseExample"
       >
-        <Form
-          factList={factList}
-          setFactList={setFactList}
-          setShowForm={setShowForm}
-        />
+        <Form />
       </div>
     </div>
   );

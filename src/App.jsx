@@ -1,6 +1,6 @@
 import Header from "./layout/Header";
 import Content from "./layout/Content.jsx";
-import { useState, useEffect, createContext } from "react";
+import { useState, useEffect } from "react";
 import supabase from "./database.js";
 import Footer from "./layout/Footer.jsx";
 import { BrowserRouter as Router, Route } from "react-router-dom";
