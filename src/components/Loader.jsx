@@ -1,4 +1,4 @@
-import React from 'react'
+import React from "react";
 
 const Loader = () => {
   return [...Array(5)].map(() => (
@@ -21,6 +21,6 @@ const Loader = () => {
       </div>
     </div>
   ));
-}
+};
 
-export default Loader
+export default Loader;

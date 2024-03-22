@@ -2,12 +2,11 @@ import { CATEGORIES } from "../../data";
 import Tag from "../components/Tag";
 import Fact from "../components/Fact";
 import Feature from "./Feature";
-import { useContext } from "react";
-import PostContext from "../provider/PostContext";
+import { usePosts } from "../provider/PostContext";
 import Loader from "../components/Loader";
 
 export default function Content() {
-  const { factList, isLoaded, setSelectedCategory } = useContext(PostContext);
+  const { factList, isLoaded, setSelectedCategory } = usePosts();
 
   const handleTagClick = (categoryName) => {
     setSelectedCategory(categoryName);

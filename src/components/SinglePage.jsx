@@ -1,12 +1,12 @@
-import React, { useContext, useState } from "react";
+import React, { useState } from "react";
 import { CATEGORIES } from "../../data.json";
 import supabase from "../database.js";
 import { Link } from "react-router-dom";
 import { useParams } from "react-router-dom";
-import PostContext from "../provider/PostContext";
+import { usePosts } from "../provider/PostContext";
 
 export default function SinglePage() {
-  const { factList, setFactList } = useContext(PostContext);
+  const { factList, setFactList } = usePosts();
 
   const [isVoting, setIsVoting] = useState(false);
 

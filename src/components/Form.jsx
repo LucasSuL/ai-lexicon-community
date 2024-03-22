@@ -1,11 +1,10 @@
 import { useState } from "react";
 import { CATEGORIES } from "../../data";
 import supabase from "../database.js";
-import { useContext } from "react";
-import PostContext from "../provider/PostContext";
+import { usePosts } from "../provider/PostContext";
 
 export default function Form() {
-  const { factList, setFactList } = useContext(PostContext);
+  const { factList, setFactList } = usePosts();
 
   const [wordCount, setWordCount] = useState(0);
   const [isUploading, setIsUploading] = useState(false);

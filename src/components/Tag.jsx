@@ -4,10 +4,10 @@ export default function Tag({ name, color, onClick }) {
       <button
         className="btn btn-tag text-dark shadow-sm tag fw-bold w-100 h-100"
         style={{ backgroundColor: color }}
+        // '()=>' to make sure this function will run only when the button is clicked
         onClick={() => {
           onClick(name);
-          setIsClicked(true);
-        }} // '()=>' to make sure this function will run only when the button is clicked
+        }}
       >
         {name}
       </button>
