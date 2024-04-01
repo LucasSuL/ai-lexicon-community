@@ -5,6 +5,7 @@ const PostContext = createContext();
 function PostProvider({ children, isLoaded, setIsLoaded }) {
   const [factList, setFactList] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState("all");
+  const [searchKeyword, setSearchKeyword] = useState("");
 
   useEffect(() => {
     const getFacts = async () => {
@@ -14,6 +15,10 @@ function PostProvider({ children, isLoaded, setIsLoaded }) {
 
         if (selectedCategory !== "all") {
           query = query.eq("category", selectedCategory);
+        }
+
+        if (searchKeyword.trim() !== "") {
+          query = query.textSearch("text", searchKeyword); // Update the query to filter by search keyword
         }
 
         let { data: facts, error } = await query
@@ -31,7 +36,7 @@ function PostProvider({ children, isLoaded, setIsLoaded }) {
       }
     };
     getFacts();
-  }, [selectedCategory]);
+  }, [selectedCategory, searchKeyword]);
 
   return (
     <PostContext.Provider
@@ -39,7 +44,10 @@ function PostProvider({ children, isLoaded, setIsLoaded }) {
         factList,
         setFactList,
         isLoaded,
+        selectedCategory,
         setSelectedCategory,
+        searchKeyword,
+        setSearchKeyword
       }}
     >
       {children}

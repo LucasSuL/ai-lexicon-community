@@ -26,6 +26,15 @@ body {
 h1 {
   text-transform: uppercase;
 }
+
+.fs-7{
+  font-size: 13px;
+}
+
+.fs-8{
+  font-size: 11px;
+
+}
 .cust-title {
   background: linear-gradient(to bottom right, black,rgb(56, 56, 56), #999999);
   -webkit-background-clip: text;

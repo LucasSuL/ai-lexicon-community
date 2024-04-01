@@ -4,6 +4,7 @@ import Fact from "../components/Fact";
 import Feature from "./Feature";
 import { usePosts } from "../provider/PostContext";
 import Loader from "../components/Loader";
+import FilterShow from "./FilterShow";
 
 export default function Content() {
   const { factList, isLoaded, setSelectedCategory } = usePosts();
@@ -38,7 +39,8 @@ export default function Content() {
   return (
     <div className="container">
       <Feature />
-      <div className="mt-5">
+      <FilterShow />
+      <div className="mt-2">
         <div className="row">
           <div className="tags col-12 col-xl-2 d-flex flex-column">
             <button

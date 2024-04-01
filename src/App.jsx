@@ -14,8 +14,8 @@ function App() {
   return (
     <Router>
       <ScrollToTop />
-      <Header />
       <PostProvider isLoaded={isLoaded} setIsLoaded={setIsLoaded}>
+        <Header />
         <Routes>
           <Route path="/ai-lexicon-community/" element={<Content />}></Route>
           {isLoaded && (

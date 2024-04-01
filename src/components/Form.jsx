@@ -102,9 +102,9 @@ export default function Form() {
 
             <div
               className="mt-2"
-              style={{ color: 20 - wordCount === 0 ? "red" : "" }}
+              style={{ color: 30 - wordCount === 0 ? "red" : "" }}
             >
-              {20 - wordCount}
+              {30 - wordCount}
             </div>
           </div>
 
