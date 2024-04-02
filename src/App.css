@@ -2,8 +2,7 @@ body {
   max-width: 1280px;
   margin-left: auto;
   margin-right: auto;
-  /* top: 0; */
-  /* left: 0; */
+
   background: linear-gradient(
     to bottom right,
     rgba(214, 228, 255, 0.5),
@@ -11,7 +10,8 @@ body {
     rgba(167, 243, 240, 0.5)
   );
   color: rgb(39, 39, 39);
-  /* color:#ffffff */
+  font-family: "Avenir", sans-serif;
+
 }
 
 * {
@@ -21,6 +21,24 @@ body {
 
 .root {
   max-width: 1200px;
+}
+
+@font-face {
+  font-family: "Avenir-Bold"; 
+  src: url("../public/fonts/AvenirLTProBlack.otf") format("opentype"); 
+}
+
+@font-face {
+  font-family: "Avenir"; 
+  src: url("../public/fonts/AvenirLTProHeavy.otf") format("opentype"); 
+}
+
+.font-ave{
+  font-family: "Avenir", sans-serif;
+}
+
+.font-ave-b{
+  font-family: "Avenir-Bold", sans-serif;
 }
 
 h1 {
@@ -40,9 +58,7 @@ h1 {
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
-  /* font-family: "Noto Sans", sans-serif;
-  font-optical-sizing: auto;
-  font-weight: 700; */
+  font-family: "Avenir-Bold", sans-serif;
 }
 
 .tag,
