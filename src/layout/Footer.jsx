@@ -2,7 +2,7 @@ import React from "react";
 
 const Footer = () => {
   return (
-    <div className=" mb-5">
+    <div className=" mb-5" id="about">
       <div
         className="container d-flex justify-content-center"
         style={{ marginTop: "100px" }}

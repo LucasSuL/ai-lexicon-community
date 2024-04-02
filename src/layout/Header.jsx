@@ -1,19 +1,6 @@
-import React, { useState } from "react";
-import { usePosts } from "../provider/PostContext";
+import React from "react";
 
 export default function Header() {
-  const { setSearchKeyword } = usePosts();
-  const [ localSearch, setLocalSearch ] = useState("");
-
-  // const [filteredContent, setFilteredContent] = useState([]);
-
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    setSearchKeyword(localSearch);
-    // const filteredResults = setFilteredContent(filteredResults);
-  };
-
-
   return (
     <nav class="navbar navbar-expand-lg">
       <div class="container-fluid">
@@ -36,33 +23,24 @@ export default function Header() {
         >
           <span class="navbar-toggler-icon"></span>
         </button>
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-          {/* <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-              <li class="nav-item">
-                <a class="nav-link active" aria-current="page" href="#">
-                  Home
-                </a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="#">
-                  Link
-                </a>
-              </li>
-            </ul> */}
-          <div className="me-auto"></div>
-          <form class="d-flex" role="search" onSubmit={handleSubmit}>
-            <input
-              class="form-control me-2"
-              type="search"
-              placeholder="Search"
-              aria-label="Search"
-              value={localSearch}
-              onChange={(e) => setLocalSearch(e.target.value)}
-            />
-            <button class="btn btn-outline-success" type="submit">
-              Search
-            </button>
-          </form>
+        <div class="collapse navbar-collapse text-center justify-content-end" id="navbarSupportedContent">
+          <ul class="navbar-nav mb-2 mb-lg-0">
+            <li class="nav-item">
+              <a class="nav-link active" aria-current="page" href="/">
+                Home
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#posts">
+                Posts
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#about">
+                About
+              </a>
+            </li>
+          </ul>
         </div>
       </div>
     </nav>

@@ -18,7 +18,10 @@ function PostProvider({ children, isLoaded, setIsLoaded }) {
         }
 
         if (searchKeyword.trim() !== "") {
-          query = query.textSearch("text", searchKeyword); // Update the query to filter by search keyword
+          console.log('serach:' + searchKeyword);
+          query = query.textSearch("text", searchKeyword,{
+            type:'websearch',
+          }); 
         }
 
         let { data: facts, error } = await query

@@ -20,7 +20,7 @@ const FilterShow = () => {
 
   return (
     <div className="container mt-5">
-      <div className="d-flex align-items-center border">
+      <div className="d-flex align-items-center">
         <p className="py-2 m-0 me-3 fw-bold">Selection: </p>
 
         {selectedCategory === "all" && !searchKeyword ? (

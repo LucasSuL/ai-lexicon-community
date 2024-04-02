@@ -40,6 +40,9 @@ h1 {
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
+  /* font-family: "Noto Sans", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 700; */
 }
 
 .tag,
