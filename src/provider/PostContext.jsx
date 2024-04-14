@@ -47,6 +47,7 @@ function PostProvider({ children, isLoaded, setIsLoaded }) {
         factList,
         setFactList,
         isLoaded,
+        setIsLoaded,
         selectedCategory,
         setSelectedCategory,
         searchKeyword,

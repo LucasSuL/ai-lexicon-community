@@ -11,17 +11,17 @@ const SearchForm = () => {
   };
 
   return (
-    <form class="container d-flex mt-5" role="search" onSubmit={handleSubmit}
+    <form className="container d-flex mt-5" role="search" onSubmit={handleSubmit}
     style={{maxWidth:"500px"}}>
       <input
-        class="form-control me-2"
+        className="form-control me-2"
         type="search"
         placeholder="Search"
         aria-label="Search"
         value={localSearch}
         onChange={(e) => setLocalSearch(e.target.value)}
       />
-      <button class="btn btn-outline-success" type="submit">
+      <button className="btn btn-outline-success" type="submit">
         Search
       </button>
     </form>

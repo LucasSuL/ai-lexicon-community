@@ -4,6 +4,7 @@ import supabase from "../database.js";
 import { Link } from "react-router-dom";
 import { useParams } from "react-router-dom";
 import { usePosts } from "../provider/PostContext";
+import MultiLan from "./MultiLan.jsx";
 
 export default function SinglePage() {
   const { factList, setFactList } = usePosts();
@@ -14,23 +15,23 @@ export default function SinglePage() {
   const factId = parseInt(id); // Convert id to integer
   const fact = factList.find((fact) => fact.id === factId);
 
-  const handleVote = async (type) => {
-    setIsVoting(true);
-    const { data: updatedFact, error } = await supabase
-      .from("facts")
-      .update({ [type]: fact[type] + 1 })
-      .eq("id", fact.id)
-      .select();
+  // const handleVote = async (type) => {
+  //   setIsVoting(true);
+  //   const { data: updatedFact, error } = await supabase
+  //     .from("facts")
+  //     .update({ [type]: fact[type] + 1 })
+  //     .eq("id", fact.id)
+  //     .select();
 
-    if (!error) {
-      setFactList((factList) =>
-        factList.map((f) => {
-          return f.id === fact.id ? updatedFact[0] : f;
-        })
-      );
-    }
-    setIsVoting(false);
-  };
+  //   if (!error) {
+  //     setFactList((factList) =>
+  //       factList.map((f) => {
+  //         return f.id === fact.id ? updatedFact[0] : f;
+  //       })
+  //     );
+  //   }
+  //   setIsVoting(false);
+  // };
 
   const categoryObject = CATEGORIES.find(
     (category) => category.name === fact.category
@@ -40,12 +41,8 @@ export default function SinglePage() {
   const isDisputed =
     fact.votesFalse >= 5 && fact.votesFalse > fact.votesInteresting;
 
-  const colonIndex = fact.text.indexOf(":");
-  const title = fact.text.substring(0, colonIndex).trim();
-  const after = fact.text.substring(colonIndex + 1).trim();
-
   const Title = () => {
-    return <h3 className="fw-bold mt-2">{title}</h3>;
+    return <h3 className="fw-bold mt-2 font-ave-b">{fact.head}</h3>;
   };
 
   const Source = () => {
@@ -78,13 +75,13 @@ export default function SinglePage() {
 
   const Text = () => {
     return (
-      <div className="mt-5">
+      <div className="mt-4">
         {isDisputed ? (
           <div className="text-danger fw-bold mb-2">[⛔️ DISPUTED] </div>
         ) : (
           ""
         )}
-        <p className="fs-5">{after}</p>
+        <p className="fs-5">{fact.text}</p>
       </div>
     );
   };
@@ -138,14 +135,18 @@ export default function SinglePage() {
 
   return (
     <div className="container">
-      <div className="bg-light p-4 shadow rounded-3 mt-5">
+      {/* <div className="bg-light p-4 shadow rounded-3 mt-5"> */}
+      <div className="mt-5">
         <Title />
         <Cat />
         <Text />
         <Source />
-        <Votes />
-        <Return />
+        {/* <Votes /> */}
       </div>
+      <div className="mt-5">
+        <MultiLan head={fact.head} />
+      </div>
+      <Return />
     </div>
   );
 }

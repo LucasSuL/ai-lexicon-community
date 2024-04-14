@@ -43,6 +43,13 @@ export default function Fact({ fact }) {
           ""
         )}
         <Link
+          className="me-2 font-ave-b"
+          style={{ color: "inherit", textDecoration: "inherit" }}
+          to={`/ai-lexicon-community/entries/${fact.id}`}
+        >
+          {fact.head}:
+        </Link>
+        <Link
           style={{ color: "inherit", textDecoration: "inherit" }}
           to={`/ai-lexicon-community/entries/${fact.id}`}
         >
