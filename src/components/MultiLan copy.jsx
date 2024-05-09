@@ -77,7 +77,7 @@ const MultiLan = ({ head }) => {
     try {
       const { data, error } = await supabase
         .from("translations")
-        .update({ vote_sub: vote_sub + 1 })
+        .update({ vote_sub: vote_sub + 1 }) 
         .eq("id", id)
         .single(); // 只更新单个翻译项
 
@@ -105,7 +105,7 @@ const MultiLan = ({ head }) => {
     try {
       const { data, error } = await supabase
         .from("translations")
-        .update({ vote_sub: vote_sub - 1 })
+        .update({ vote_sub: vote_sub - 1 }) 
         .eq("id", id)
         .single(); // 只更新单个翻译项
 
@@ -127,42 +127,19 @@ const MultiLan = ({ head }) => {
     }
   };
 
+
   const TransSection = () => {
     return translations.map((item) => (
+      
       <div key={item.id} className="bg-light p-4 shadow rounded-3 mt-3">
-        <div className="d-flex">
-          {/* voting */}
-          <div className="px-2 me-3">
-            <div className="d-flex flex-column align-items-center gap-2">
-              <button
-                disabled={isVoting}
-                type="button"
-                className="btn btn-outline-dark rounded-4 m-0 py-0"
-                onClick={() => handleUpVote(item.id, item.vote_sub)}
-              >
-                <i className="fas fa-arrow-up fs-6 m-0 p-1"></i>
-              </button>
-
-              {/* NUM */}
-              <p className="m-0 fs-6">{item.vote_sub}</p>
-
-              <button
-                disabled={isVoting}
-                type="button"
-                className="btn btn-outline-dark rounded-4 m-0 py-0"
-                onClick={() => handleDownVote(item.id, item.vote_sub)}
-              >
-                <i className="fas fa-arrow-down fs-6 m-0 p-1"></i>
-              </button>
-            </div>
-          </div>
-          {item.vote_sub <= -5 ? (
-            <span className="text-danger fw-bold">[⛔️ DISPUTED] </span>
-          ) : (
-            ""
-          )}
+        {const isDisputed = item.votesSub <= -5;}
+         
+          {isDisputed ? (
+          <span className="text-danger fw-bold">[⛔️ DISPUTED] </span>
+        ) : (
+          ""
+        )}
           <div className="fs-6">{item.text}</div>
-        </div>
       </div>
     ));
   };

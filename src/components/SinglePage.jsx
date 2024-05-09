@@ -100,7 +100,7 @@ export default function SinglePage() {
             </div>
           </div>
 
-          <div className="col-11">
+          <div>
             {/* label */}
             <div
               className="mt-3 tag d-inline p-1 px-3 justify-content-center align-items-center rounded fw-bold m-0"
