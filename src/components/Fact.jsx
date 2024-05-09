@@ -15,7 +15,7 @@ export default function Fact({ fact }) {
 
       <div className="p-2 col-12 col-lg-9 pe-3">
         <Link
-          className="me-2 font-ave-b"
+          className="me-2 font-ave-b text-capitalize"
           style={{ color: "inherit", textDecoration: "inherit" }}
           to={`/ai-lexicon-community/entries/${fact.id}`}
         >

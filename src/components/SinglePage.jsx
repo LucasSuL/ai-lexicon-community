@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { CATEGORIES } from "../../data.json";
 import { Link } from "react-router-dom";
 import { useParams } from "react-router-dom";
@@ -6,9 +6,14 @@ import { usePosts } from "../provider/PostContext";
 import MultiLan from "./MultiLan.jsx";
 
 export default function SinglePage() {
-  const { factList } = usePosts();
+  const { user, setUser, factList } = usePosts();
 
   const { id } = useParams();
+
+  useEffect(() => {
+    // This effect does nothing, but it triggers a re-render when user state changes
+  }, [user]);
+
   const factId = parseInt(id); // Convert id to integer
   const fact = factList.find((fact) => fact.id === factId);
 

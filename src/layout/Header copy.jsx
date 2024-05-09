@@ -1,25 +1,20 @@
-import React, { useEffect, useState } from "react";
-import { usePosts } from "../provider/PostContext";
+import React from "react";
 
 export default function Header() {
-  // const storedUser = sessionStorage.getItem("user");
-  // const [user, setUser] = useState(storedUser ? JSON.parse(storedUser) : null);
+  const storedUser = sessionStorage.getItem("user");
+  let user = null;
+  if (storedUser) {
+    user = JSON.parse(storedUser);
+    console.log(user);
+  }
 
-  const {user, setUser} =  usePosts();
-  
   function handleSignOut(e) {
     // 清除会话存储中的用户信息
     sessionStorage.removeItem("user");
     // 显示登录按钮
     document.getElementById("signInDiv").hidden = false;
-    // 更新用户状态为 null
-    setUser(null);
+    user=null
   }
-
-  // 监听用户状态变化，并在状态更新时重新渲染组件
-  useEffect(() => {
-    // This effect does nothing, but it triggers a re-render when user state changes
-  }, [user]);
 
   return (
     <nav className="navbar navbar-expand-lg">

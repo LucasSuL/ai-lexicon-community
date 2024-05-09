@@ -9,8 +9,32 @@ function PostProvider({ children, isLoaded, setIsLoaded }) {
   const [selectedCategory, setSelectedCategory] = useState("all");
   const [searchKeyword, setSearchKeyword] = useState("");
 
-  const storedUser = sessionStorage.getItem("user");
-  const [user, setUser] = useState(storedUser ? JSON.parse(storedUser) : null);
+  const [user, setUser] = useState({});
+
+  function handleCallbackResponse(response) {
+    var userObj = jwtDecode(response.credential);
+    console.log(userObj);
+    if (userObj) {
+      setUser(userObj);
+    }
+    document.getElementById("signInDiv").hidden = true;
+  }
+
+  useEffect(() => {
+    console.log("???????????????????");
+    /* global google */
+    google.accounts.id.initialize({
+      client_id:
+        "574847166176-q8555hjl1s1pctmqhk2klpq879degm3j.apps.googleusercontent.com",
+      callback: handleCallbackResponse,
+    });
+    google.accounts.id.renderButton(document.getElementById("signInDiv"), {
+      theme: "outline",
+      size: "large",
+    });
+
+    google.accounts.id.prompt();
+  }, []);
 
   useEffect(() => {
     const getFacts = async () => {
@@ -23,7 +47,7 @@ function PostProvider({ children, isLoaded, setIsLoaded }) {
         }
 
         if (searchKeyword.trim() !== "") {
-          console.log("search:" + searchKeyword);
+          console.log("serach:" + searchKeyword);
           query = query.textSearch("head_text", searchKeyword, {
             type: "websearch",
           });
@@ -45,41 +69,6 @@ function PostProvider({ children, isLoaded, setIsLoaded }) {
     };
     getFacts();
   }, [selectedCategory, searchKeyword]);
-
-  useEffect(() => {
-    // 检查会话存储中是否有用户信息
-    const storedUser = sessionStorage.getItem("user");
-    if (storedUser) {
-      const userObj = JSON.parse(storedUser);
-      sessionStorage.setItem("user", JSON.stringify(userObj));
-      document.getElementById("signInDiv").hidden = true;
-    } else {
-      // 如果没有用户信息，显示登录按钮
-      document.getElementById("signInDiv").hidden = false;
-    }
-
-    /* global google */
-    google.accounts.id.initialize({
-      client_id:
-        "574847166176-q8555hjl1s1pctmqhk2klpq879degm3j.apps.googleusercontent.com",
-      callback: handleCallbackResponse,
-    });
-    google.accounts.id.renderButton(document.getElementById("signInDiv"), {
-      theme: "outline",
-      size: "large",
-    });
-
-    google.accounts.id.prompt();
-  }, []);
-
-  function handleCallbackResponse(response) {
-    const userObj = jwtDecode(response.credential);
-    sessionStorage.setItem("user", JSON.stringify(userObj));
-    document.getElementById("signInDiv").hidden = true;
-
-    // setUser
-    setUser(userObj)
-  }
 
   return (
     <PostContext.Provider
@@ -103,7 +92,7 @@ function PostProvider({ children, isLoaded, setIsLoaded }) {
 
 function usePosts() {
   const context = useContext(PostContext);
-  if (context === undefined) {
+  if (context == undefined) {
     throw new Error("PostContext used outside of PostProvider");
   }
   return context;

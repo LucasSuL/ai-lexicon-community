@@ -4,14 +4,16 @@ import supabase from "../database.js";
 import { usePosts } from "../provider/PostContext";
 
 export default function Form() {
-  const { factList, setFactList } = usePosts();
+  const { factList, setFactList, user } = usePosts();
 
   const [wordCount, setWordCount] = useState(0);
   const [isUploading, setIsUploading] = useState(false);
   const [formData, setFormData] = useState({
+    name: "",
     fact: "",
     source: "",
     category: "",
+    userAcct: "",
   });
 
   const handleChange = (event) => {
@@ -39,9 +41,11 @@ export default function Form() {
           .from("facts")
           .insert([
             {
+              head: formData.head,
               text: formData.fact,
               source: formData.source,
               category: formData.category,
+              userAcct: user.email,
             },
           ])
           .select();
@@ -52,6 +56,7 @@ export default function Form() {
 
         //4-reset input fields
         setFormData({
+          head:"",
           fact: "",
           source: "",
           category: "",
@@ -87,8 +92,23 @@ export default function Form() {
       >
         <div className="row">
           <div className="col-6 ">
+            <div class="mb-3">
+              <label htmlFor="head" class="form-label">
+                Name of the Terminology
+              </label>
+              <input
+                required
+                type="text"
+                name = "head"
+                value={formData.head}
+                onChange={handleChange}
+                class="form-control"
+                // id="exampleFormControlInput1"
+                placeholder=""
+              />
+            </div>
             <div className="">
-              <label htmlFor="fact">Share a Fact...</label>
+              <label htmlFor="fact">Explanation</label>
               <textarea
                 required
                 type="text"
@@ -109,7 +129,7 @@ export default function Form() {
           </div>
 
           <div className="col-6">
-            <div className="mb-4">
+            <div className="mb-3">
               <label htmlFor="source">Trustworthy Source</label>
               <div className="input-group">
                 <span className="input-group-text mt-2" id="basic-addon3">
