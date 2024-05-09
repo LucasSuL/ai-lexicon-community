@@ -19,7 +19,7 @@ const Footer = () => {
           </a>
         </p>
       </div>
-      <div className="d-flex justify-content-center align-items-center pb-5 ">
+      <div className="d-flex justify-content-center align-items-center pb-5">
         <span className=" text-secondary text-s-2 me-1">Made with</span>
         <p className="m-0">
           <a

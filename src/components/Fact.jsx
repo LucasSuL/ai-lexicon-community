@@ -1,47 +1,19 @@
-import React, { useState } from "react";
+import React from "react";
 import { CATEGORIES } from "../../data";
-import supabase from "../database.js";
 import { Link } from "react-router-dom";
 import { usePosts } from "../provider/PostContext";
 
 export default function Fact({ fact }) {
-  const { setFactList } = usePosts();
-
-  const [isVoting, setIsVoting] = useState(false);
-  const handleVote = async (type) => {
-    setIsVoting(true);
-    const { data: updatedFact, error } = await supabase
-      .from("facts")
-      .update({ [type]: fact[type] + 1 })
-      .eq("id", fact.id)
-      .select();
-
-    if (!error) {
-      setFactList((factList) =>
-        factList.map((f) => {
-          return f.id === fact.id ? updatedFact[0] : f;
-        })
-      );
-    }
-    setIsVoting(false);
-  };
-
+  
   const categoryObject = CATEGORIES.find(
     (category) => category.name === fact.category
   );
   const categoryColor = categoryObject ? categoryObject.color : "#cccccc"; // Default color if category not found
 
-  const isDisputed =
-    fact.votesFalse >= 5 && fact.votesFalse > fact.votesInteresting;
-
   return (
     <div className="bg-white shadow p-2 m-2 mb-4 d-flex align-items-center justify-content-between rounded row">
       <div className="p-2 col-12 col-lg-7 pe-3">
-        {isDisputed ? (
-          <span className="text-danger fw-bold">[⛔️ DISPUTED] </span>
-        ) : (
-          ""
-        )}
+
         <Link
           className="me-2 font-ave-b"
           style={{ color: "inherit", textDecoration: "inherit" }}
@@ -68,35 +40,7 @@ export default function Fact({ fact }) {
           >
             {fact.category}
           </div>
-          <div className="vote-buttons d-flex justify-content-between gap-2 align-items-center col-6">
-            <button
-              className="btn btn-light d-flex align-items-center justify-content-center gap-1 shadow-sm"
-              onClick={() => handleVote("votesInteresting")}
-              disabled={isVoting}
-              style={{ width: "50px" }}
-            >
-              👍
-              <p className="count m-0 fw-bold">{fact.votesInteresting}</p>
-            </button>
-            <button
-              className="btn btn-light d-flex align-items-center justify-content-center gap-1 shadow-sm"
-              onClick={() => handleVote("votesMindblowing")}
-              disabled={isVoting}
-              style={{ width: "50px" }}
-            >
-              🤯
-              <p className="count m-0 fw-bold">{fact.votesMindblowing}</p>
-            </button>
-            <button
-              className="btn btn-light d-flex align-items-center justify-content-center gap-1 shadow-sm"
-              onClick={() => handleVote("votesFalse")}
-              disabled={isVoting}
-              style={{ width: "50px" }}
-            >
-              ⛔️
-              <p className="count m-0 fw-bold">{fact.votesFalse}</p>
-            </button>
-          </div>
+  
         </div>
       </div>
     </div>

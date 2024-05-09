@@ -1,11 +1,39 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import supabase from "../database";
+import { jwtDecode } from "jwt-decode";
+
+
 const PostContext = createContext();
 
 function PostProvider({ children, isLoaded, setIsLoaded }) {
   const [factList, setFactList] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState("all");
   const [searchKeyword, setSearchKeyword] = useState("");
+
+  const [user, setUser] = useState({});
+
+  function handleCallbackResponse(response) {
+    // console.log("Encoded JWT ID token: " + response.credential);
+    var userObj = jwtDecode(response.credential);
+    console.log(userObj);
+    setUser(userObj);
+    document.getElementById("signInDiv").hidden = true;
+  }
+
+  useEffect(() => {
+    /* global google */
+    google.accounts.id.initialize({
+      client_id:
+        "574847166176-q8555hjl1s1pctmqhk2klpq879degm3j.apps.googleusercontent.com",
+      callback: handleCallbackResponse,
+    });
+    google.accounts.id.renderButton(document.getElementById("signInDiv"), {
+      theme: "outline",
+      size: "large",
+    });
+
+    google.accounts.id.prompt();
+  }, []);
 
   useEffect(() => {
     const getFacts = async () => {
@@ -18,10 +46,10 @@ function PostProvider({ children, isLoaded, setIsLoaded }) {
         }
 
         if (searchKeyword.trim() !== "") {
-          console.log('serach:' + searchKeyword);
-          query = query.textSearch("text", searchKeyword,{
-            type:'websearch',
-          }); 
+          console.log("serach:" + searchKeyword);
+          query = query.textSearch("text", searchKeyword, {
+            type: "websearch",
+          });
         }
 
         let { data: facts, error } = await query
@@ -44,6 +72,8 @@ function PostProvider({ children, isLoaded, setIsLoaded }) {
   return (
     <PostContext.Provider
       value={{
+        user,
+        setUser,
         factList,
         setFactList,
         isLoaded,
@@ -51,7 +81,7 @@ function PostProvider({ children, isLoaded, setIsLoaded }) {
         selectedCategory,
         setSelectedCategory,
         searchKeyword,
-        setSearchKeyword
+        setSearchKeyword,
       }}
     >
       {children}

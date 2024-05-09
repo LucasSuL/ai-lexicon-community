@@ -1,37 +1,16 @@
-import React, { useState } from "react";
+import React from "react";
 import { CATEGORIES } from "../../data.json";
-import supabase from "../database.js";
 import { Link } from "react-router-dom";
 import { useParams } from "react-router-dom";
 import { usePosts } from "../provider/PostContext";
 import MultiLan from "./MultiLan.jsx";
 
 export default function SinglePage() {
-  const { factList, setFactList } = usePosts();
-
-  const [isVoting, setIsVoting] = useState(false);
+  const { factList } = usePosts();
 
   const { id } = useParams();
   const factId = parseInt(id); // Convert id to integer
   const fact = factList.find((fact) => fact.id === factId);
-
-  // const handleVote = async (type) => {
-  //   setIsVoting(true);
-  //   const { data: updatedFact, error } = await supabase
-  //     .from("facts")
-  //     .update({ [type]: fact[type] + 1 })
-  //     .eq("id", fact.id)
-  //     .select();
-
-  //   if (!error) {
-  //     setFactList((factList) =>
-  //       factList.map((f) => {
-  //         return f.id === fact.id ? updatedFact[0] : f;
-  //       })
-  //     );
-  //   }
-  //   setIsVoting(false);
-  // };
 
   const categoryObject = CATEGORIES.find(
     (category) => category.name === fact.category
@@ -99,52 +78,16 @@ export default function SinglePage() {
     );
   };
 
-  const Votes = () => {
-    return (
-      <div className="vote-buttons d-flex justify-content-start gap-3 align-items-center mb-3 mt-3">
-        <button
-          className="btn btn-light d-flex align-items-center justify-content-center gap-1 shadow-sm"
-          onClick={() => handleVote("votesInteresting")}
-          disabled={isVoting}
-          style={{ width: "50px" }}
-        >
-          👍
-          <p className="count m-0 fw-bold">{fact.votesInteresting}</p>
-        </button>
-        <button
-          className="btn btn-light d-flex align-items-center justify-content-center gap-1 shadow-sm"
-          onClick={() => handleVote("votesMindblowing")}
-          disabled={isVoting}
-          style={{ width: "50px" }}
-        >
-          🤯
-          <p className="count m-0 fw-bold">{fact.votesMindblowing}</p>
-        </button>
-        <button
-          className="btn btn-light d-flex align-items-center justify-content-center gap-1 shadow-sm"
-          onClick={() => handleVote("votesFalse")}
-          disabled={isVoting}
-          style={{ width: "50px" }}
-        >
-          ⛔️
-          <p className="count m-0 fw-bold">{fact.votesFalse}</p>
-        </button>
-      </div>
-    );
-  };
-
   return (
     <div className="container">
-      {/* <div className="bg-light p-4 shadow rounded-3 mt-5"> */}
       <div className="mt-5">
         <Title />
         <Cat />
         <Text />
         <Source />
-        {/* <Votes /> */}
       </div>
       <div className="mt-5">
-        <MultiLan head={fact.head} />
+        <MultiLan id = {fact.id} head={fact.head} />
       </div>
       <Return />
     </div>

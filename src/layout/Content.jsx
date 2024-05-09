@@ -41,7 +41,6 @@ export default function Content() {
     <div className="container">
       <Feature />
       <div className="" id="posts">
-        <SearchForm />
         <FilterShow />
         <div className="mt-2">
           <div className="row">

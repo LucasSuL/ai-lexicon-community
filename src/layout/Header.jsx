@@ -1,6 +1,14 @@
 import React from "react";
+import { usePosts } from "../provider/PostContext";
 
 export default function Header() {
+  const { user, setUser } = usePosts();
+
+  function handleSignOut(e) {
+    setUser({});
+    document.getElementById("signInDiv").hidden = false;
+  }
+
   return (
     <nav className="navbar navbar-expand-lg">
       <div className="container-fluid">
@@ -23,7 +31,10 @@ export default function Header() {
         >
           <span className="navbar-toggler-icon"></span>
         </button>
-        <div className="collapse navbar-collapse text-center justify-content-end" id="navbarSupportedContent">
+        <div
+          className="collapse navbar-collapse text-center justify-content-end"
+          id="navbarSupportedContent"
+        >
           <ul className="navbar-nav mb-2 mb-lg-0">
             <li className="nav-item">
               <a className="nav-link active" aria-current="page" href="/">
@@ -39,6 +50,57 @@ export default function Header() {
               <a className="nav-link" href="#about">
                 About
               </a>
+            </li>
+            <div className="ms-2" id="signInDiv"></div>
+            {Object.keys(user).length != 0 && (
+              <button
+                type="button"
+                className="btn btn-danger"
+                onClick={(e) => handleSignOut(e)}
+              >
+                Sign Out
+              </button>
+            )}
+            <li className="nav-item">
+              {user && (
+                <div className="d-flex align-items-center gap-2">
+                  <p className="m-0"> Hello {user.name}!</p>
+                  <img
+                    className="rounded-5 m-0"
+                    src={user.picture}
+                    style={{ maxWidth: "40px", maxHeight: "40px" }}
+                  ></img>
+                  <div class="dropdown">
+                    <a
+                      class="btn btn-secondary dropdown-toggle"
+                      href="#"
+                      role="button"
+                      data-bs-toggle="dropdown"
+                      aria-expanded="false"
+                    >
+                      Dropdown link
+                    </a>
+
+                    <ul class="dropdown-menu">
+                      <li>
+                        <a class="dropdown-item" href="#">
+                          Action
+                        </a>
+                      </li>
+                      <li>
+                        <a class="dropdown-item" href="#">
+                          Another action
+                        </a>
+                      </li>
+                      <li>
+                        <a class="dropdown-item" href="#">
+                          Something else here
+                        </a>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              )}
             </li>
           </ul>
         </div>

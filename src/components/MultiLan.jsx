@@ -15,7 +15,6 @@ const MultiLan = ({ head }) => {
   const [isLoaded, setIsLoaded] = useState(true);
   const [translations, setTranslations] = useState([]);
   const [isVoting, setIsVoting] = useState(false);
-
   const [lan, setLan] = useState("");
 
   const languageFlags = {
@@ -57,7 +56,9 @@ const MultiLan = ({ head }) => {
         .from("translations")
         .select("*")
         .eq("head", head)
-        .eq("language", lan);
+        .eq("language", lan)
+        .limit(5)
+        .order("vote_1", { ascending: false });
 
       if (error) {
         throw new Error(error.message);
@@ -70,37 +71,33 @@ const MultiLan = ({ head }) => {
     }
   };
 
-  const handleVote = async (type) => {
+  const handleVote = async (item, type) => {
     setIsVoting(true);
-    const { data: updatedFact, error } = await supabase
+    const { data, error } = await supabase
       .from("translations")
-      .update({ [type]: fact[type] + 1 })
-      .eq("id", fact.id)
+      .update({ [type]: item[type] + 1 })
+      .eq("id", item.id)
       .select();
-
-    if (!error) {
-      setFactList((factList) =>
-        factList.map((f) => {
-          return f.id === fact.id ? updatedFact[0] : f;
-        })
-      );
-    }
     setIsVoting(false);
+    fetchTranslation();
   };
 
   // const isDisputed =
   // fact.votesFalse >= 5 && fact.votesFalse > fact.votesInteresting;
 
   const TransSection = () => {
-    return translations.slice(0, 5).map((item) => (
-      <div className="bg-light p-4 shadow rounded-3 mt-3">
-        <div className="" key={item.id}>
-          {item.text}
-        </div>
+    return translations.map((item) => (
+      <div key={item.id} className="bg-light p-4 shadow rounded-3 mt-3">
+           {/* {isDisputed ? (
+          <span className="text-danger fw-bold">[⛔️ DISPUTED] </span>
+        ) : (
+          ""
+        )} */}
+        <div className="fs-6">{item.text}</div>
         <div className="vote-buttons d-flex justify-content-start gap-3 align-items-center mt-3">
           <button
             className="btn btn-light d-flex align-items-center justify-content-center gap-1 shadow-sm"
-            onClick={() => handleVote("votesInteresting")}
+            onClick={() => handleVote(item, "vote_1")}
             disabled={isVoting}
             style={{ width: "50px" }}
           >
@@ -109,7 +106,7 @@ const MultiLan = ({ head }) => {
           </button>
           <button
             className="btn btn-light d-flex align-items-center justify-content-center gap-1 shadow-sm"
-            onClick={() => handleVote("votesMindblowing")}
+            onClick={() => handleVote(item, "vote_2")}
             disabled={isVoting}
             style={{ width: "50px" }}
           >
@@ -118,7 +115,7 @@ const MultiLan = ({ head }) => {
           </button>
           <button
             className="btn btn-light d-flex align-items-center justify-content-center gap-1 shadow-sm"
-            onClick={() => handleVote("votesFalse")}
+            onClick={() => handleVote(item, "vote_3")}
             disabled={isVoting}
             style={{ width: "50px" }}
           >
@@ -159,7 +156,13 @@ const MultiLan = ({ head }) => {
 
           {isLoaded ? (
             <div className="mt-3">
-              <TransSection />
+              {translations.length == 0 ? (
+                <p className="m-2">
+                  No facts for this selection, create your first one!
+                </p>
+              ) : (
+                <TransSection />
+              )}
             </div>
           ) : (
             <div className="mt-3">loading....</div>
