@@ -2,7 +2,6 @@ import { createContext, useContext, useEffect, useState } from "react";
 import supabase from "../database";
 import { jwtDecode } from "jwt-decode";
 
-
 const PostContext = createContext();
 
 function PostProvider({ children, isLoaded, setIsLoaded }) {
@@ -13,14 +12,16 @@ function PostProvider({ children, isLoaded, setIsLoaded }) {
   const [user, setUser] = useState({});
 
   function handleCallbackResponse(response) {
-    // console.log("Encoded JWT ID token: " + response.credential);
     var userObj = jwtDecode(response.credential);
     console.log(userObj);
-    setUser(userObj);
+    if (userObj) {
+      setUser(userObj);
+    }
     document.getElementById("signInDiv").hidden = true;
   }
 
   useEffect(() => {
+    console.log("???????????????????");
     /* global google */
     google.accounts.id.initialize({
       client_id:
@@ -54,7 +55,7 @@ function PostProvider({ children, isLoaded, setIsLoaded }) {
 
         let { data: facts, error } = await query
           .limit(10)
-          .order("votesInteresting", { ascending: false });
+          .order("votesMain", { ascending: false });
 
         if (error) {
           throw new Error(error.message);

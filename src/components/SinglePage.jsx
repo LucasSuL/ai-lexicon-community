@@ -21,7 +21,7 @@ export default function SinglePage() {
     fact.votesFalse >= 5 && fact.votesFalse > fact.votesInteresting;
 
   const Title = () => {
-    return <h3 className="fw-bold mt-2 font-ave-b">{fact.head}</h3>;
+    return <h3 className="fw-bold font-ave-b">{fact.head}</h3>;
   };
 
   const Source = () => {
@@ -80,16 +80,36 @@ export default function SinglePage() {
 
   return (
     <div className="container">
-      <div className="mt-5">
-        <Title />
-        <Cat />
-        <Text />
-        <Source />
-      </div>
-      <div className="mt-5">
-        <MultiLan id = {fact.id} head={fact.head} />
-      </div>
-      <Return />
+      <Title />
+        <div className="mt-3 row">
+          {/* upvoting */}
+          <div className="col-1 p-0">
+            <div className="d-flex flex-column align-items-center gap-2">
+              <button
+                type="button"
+                className="btn btn-outline-dark rounded-5 m-0 py-0 px-1"
+              >
+                <i className="fas fa-arrow-up fs-6 m-0 p-0"></i>
+              </button>
+              <p className="m-0 fs-6">{fact.votesMain}</p>
+              <button
+                type="button"
+                className="btn btn-outline-dark rounded-5 m-0 py-0 px-1"
+              >
+                <i className="fas fa-arrow-down fs-6 m-0 p-0"></i>
+              </button>
+            </div>
+          </div>
+          <div className=" col-11">
+            <Cat />
+            <Text />
+            <Source />
+          </div>
+          <div className="mt-5">
+            <MultiLan id={fact.id} head={fact.head} />
+          </div>
+          <Return />
+        </div>
     </div>
   );
 }
