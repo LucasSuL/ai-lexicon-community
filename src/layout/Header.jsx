@@ -52,56 +52,44 @@ export default function Header() {
               </a>
             </li>
             <div className="ms-2" id="signInDiv"></div>
-            {Object.keys(user).length != 0 && (
-              <button
-                type="button"
-                className="btn btn-danger"
-                onClick={(e) => handleSignOut(e)}
-              >
-                Sign Out
-              </button>
-            )}
-            <li className="nav-item">
-              {user && (
-                <div className="d-flex align-items-center gap-2">
-                  <p className="m-0"> Hello {user.name}!</p>
-                  <img
-                    className="rounded-5 m-0"
-                    src={user.picture}
-                    style={{ maxWidth: "40px", maxHeight: "40px" }}
-                  ></img>
-                  <div class="dropdown">
-                    <a
-                      class="btn btn-secondary dropdown-toggle"
-                      href="#"
-                      role="button"
-                      data-bs-toggle="dropdown"
-                      aria-expanded="false"
-                    >
-                      Dropdown link
-                    </a>
 
-                    <ul class="dropdown-menu">
-                      <li>
-                        <a class="dropdown-item" href="#">
-                          Action
-                        </a>
-                      </li>
-                      <li>
-                        <a class="dropdown-item" href="#">
-                          Another action
-                        </a>
-                      </li>
-                      <li>
-                        <a class="dropdown-item" href="#">
-                          Something else here
-                        </a>
-                      </li>
-                    </ul>
-                  </div>
+            {Object.keys(user).length != 0 && (
+              <div className="ms-3 d-flex align-items-center gap-2 ">
+                <p className="m-0"> Hello {user.name}!</p>
+
+                <div className="dropdown">
+                  <a
+                    className="btn dropdown-toggle p-0"
+                    href="#"
+                    role="button"
+                    data-bs-toggle="dropdown"
+                    aria-expanded="false"
+                  >
+                    <img
+                      className="rounded-5 m-0"
+                      src={user.picture}
+                      style={{ maxWidth: "35px", maxHeight: "35px" }}
+                    ></img>
+                  </a>
+
+                  <ul className="dropdown-menu dropdown-menu-end">
+                      <p className="dropdown-item text-secondary m-0">
+                        {user.email}
+                      </p>
+                      <div className="dropdown-item" href="#">
+                        <button
+                          type="button"
+                          className="btn btn-danger w-100"
+                          onClick={(e) => handleSignOut(e)}
+                        >
+                          Sign Out
+                        </button>
+                        {/* )} */}
+                      </div>
+                  </ul>
                 </div>
-              )}
-            </li>
+              </div>
+            )}
           </ul>
         </div>
       </div>

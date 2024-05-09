@@ -47,7 +47,7 @@ function PostProvider({ children, isLoaded, setIsLoaded }) {
 
         if (searchKeyword.trim() !== "") {
           console.log("serach:" + searchKeyword);
-          query = query.textSearch("text", searchKeyword, {
+          query = query.textSearch("head_text", searchKeyword, {
             type: "websearch",
           });
         }
