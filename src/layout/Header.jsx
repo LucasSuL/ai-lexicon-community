@@ -22,9 +22,10 @@ export default function Header() {
   return (
     <nav className="navbar navbar-expand-lg">
       <div className="container-fluid">
-        <a className="navbar-brand" href="/ai-lexicon-community/">
 
           {/* 设置绝对路径，handle github.io 上的路径问题 */}
+        <a className="navbar-brand" href="/ai-lexicon-community/">
+          
           <div className="d-flex align-items-center">
             <img src="./logo.png" className="ms-0 logo me-3" />
             <p className="fw-bold text-dark m-0 fs-4 text-uppercase d-none d-sm-block font-ave-b">
@@ -49,7 +50,7 @@ export default function Header() {
         >
           <ul className="navbar-nav mb-2 mb-lg-0">
             <li className="nav-item">
-              <a className="nav-link active" aria-current="page" href="/">
+              <a className="nav-link active" aria-current="page" href="/ai-lexicon-community/">
                 Home
               </a>
             </li>
