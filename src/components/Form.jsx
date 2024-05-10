@@ -46,6 +46,7 @@ export default function Form() {
               source: formData.source,
               category: formData.category,
               userAcct: user.email,
+              user_name:user.name,
             },
           ])
           .select();

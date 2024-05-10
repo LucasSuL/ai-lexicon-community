@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import supabase from "../database";
+import SubForm from "./SubForm";
 
 import fr from "/flags/fr.png";
 import cn from "/flags/cn.png";
@@ -9,13 +10,24 @@ import it from "/flags/it.png";
 import jp from "/flags/jp.png";
 import kr from "/flags/kr.png";
 import vn from "/flags/vn.png";
-// import { usePosts } from "../provider/PostContext";
+import { usePosts } from "../provider/PostContext";
 
-const MultiLan = ({ head }) => {
+const MultiLan = ({ id, head }) => {
+  const { user } = usePosts();
   const [isLoaded, setIsLoaded] = useState(true);
   const [translations, setTranslations] = useState([]);
   const [isVoting, setIsVoting] = useState(false);
   const [lan, setLan] = useState("");
+  const [showForm, setShowForm] = useState(false);
+
+  // deal with list refresh
+  const handleRefresh = () => {
+    fetchTranslation()
+  };
+
+  const handleShowForm = () => {
+    setShowForm(!showForm);
+  };
 
   const languageFlags = {
     cn: cn,
@@ -96,6 +108,7 @@ const MultiLan = ({ head }) => {
       console.error("Error updating vote count:", error.message);
     } finally {
       setIsVoting(false);
+      fetchTranslation()
     }
   };
 
@@ -124,6 +137,7 @@ const MultiLan = ({ head }) => {
       console.error("Error updating vote count:", error.message);
     } finally {
       setIsVoting(false);
+      fetchTranslation()
     }
   };
 
@@ -156,12 +170,19 @@ const MultiLan = ({ head }) => {
               </button>
             </div>
           </div>
-          {item.vote_sub <= -5 ? (
-            <span className="text-danger fw-bold">[⛔️ DISPUTED] </span>
-          ) : (
-            ""
-          )}
-          <div className="fs-6">{item.text}</div>
+
+          <div className="d-flex flex-column gap-5">
+            <div className="d-flex align-items-center gap-2">
+              {item.vote_sub <= -5 ? (
+                <span className="text-danger fw-bold">[⛔️DISPUTED] </span>
+              ) : (
+                ""
+              )}
+
+              <div className="fs-5">{item.text}</div>
+            </div>
+            <div className="text-secondary">Contributed by {item.user_name}</div>
+          </div>
         </div>
       </div>
     ));
@@ -189,26 +210,61 @@ const MultiLan = ({ head }) => {
         <option value="es">Spanish</option>
         <option value="vn">Vietnamese</option>
       </select>
+
       {lan && (
-        <div className="mt-3">
-          <div className="d-flex align-items-center gap-3">
-            <img src={languageFlags[lan]} alt={lan} style={{ width: "30px" }} />
-            <p className="m-0">{languageNames[lan]}</p>
+        <div>
+          <div className="d-flex align-items-center justify-content-center mt-3 gap-3">
+            <div className="d-flex align-items-center ">
+              <div className="d-flex align-items-center gap-3">
+                <img
+                  src={languageFlags[lan]}
+                  alt={lan}
+                  style={{ width: "30px" }}
+                />
+                <p className="m-0">{languageNames[lan]}</p>
+              </div>
+            </div>
+
+            {/* post form */}
+            <button
+              type="button"
+              className="btn text-light"
+              data-bs-toggle="collapse"
+              data-bs-target="#collapseSub"
+              aria-expanded="false"
+              aria-controls="collapseExample"
+              onClick={() => handleShowForm()}
+              style={{
+                backgroundColor: showForm ? "#ef4444" : "#198754",
+                width: "120px",
+              }}
+            >
+              {showForm ? "Close" : "Contribute"}
+            </button>
           </div>
 
-          {isLoaded ? (
-            <div className="mt-3">
-              {translations.length == 0 ? (
-                <p className="m-2">
-                  No contributes for this selection, create your first one!
-                </p>
-              ) : (
-                <TransSection />
-              )}
-            </div>
-          ) : (
-            <div className="mt-3">loading....</div>
-          )}
+          <div
+            className="collapse border mt-4 w-100 shadow-sm rounded bg-light"
+            id="collapseSub"
+          >
+            <SubForm lan={lan} head={head} id = {id} onSubFormSubmit={handleRefresh} />
+          </div>
+
+          <div>
+            {isLoaded ? (
+              <div className="mt-3">
+                {translations.length == 0 ? (
+                  <p className="m-2">
+                    No contributes for this selection, create your first one!
+                  </p>
+                ) : (
+                  <TransSection />
+                )}
+              </div>
+            ) : (
+              <div className="mt-3">loading....</div>
+            )}
+          </div>
         </div>
       )}
     </div>

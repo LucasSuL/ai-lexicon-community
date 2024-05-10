@@ -134,7 +134,7 @@ export default function SinglePage() {
             </div>
 
             {/* user */}
-            <div>Contributed by {user.name}</div>
+            <div>Contributed by {fact.user_name}</div>
           </div>
         </div>
       </div>
