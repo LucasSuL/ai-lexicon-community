@@ -24,7 +24,7 @@ export default function Header() {
       <div className="container-fluid">
 
           {/* 设置绝对路径，handle github.io 上的路径问题 */}
-        <a className="navbar-brand" href="/ai-lexicon-community/">
+        <a className="navbar-brand" href="./">
           
           <div className="d-flex align-items-center">
             <img src="./logo.png" className="ms-0 logo me-3" />
