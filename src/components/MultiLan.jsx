@@ -22,7 +22,7 @@ const MultiLan = ({ id, head }) => {
 
   // deal with list refresh
   const handleRefresh = () => {
-    fetchTranslation()
+    fetchTranslation();
   };
 
   const handleShowForm = () => {
@@ -84,6 +84,13 @@ const MultiLan = ({ id, head }) => {
   };
 
   const handleUpVote = async (id, vote_sub) => {
+    // 检查用户是否登录
+    if (!user) {
+      // 用户未登录，显示提示消息
+      alert("Please login to vote.");
+      return; // 中断表单提交
+    }
+
     setIsVoting(true);
 
     try {
@@ -108,11 +115,18 @@ const MultiLan = ({ id, head }) => {
       console.error("Error updating vote count:", error.message);
     } finally {
       setIsVoting(false);
-      fetchTranslation()
+      fetchTranslation();
     }
   };
 
   const handleDownVote = async (id, vote_sub) => {
+    // 检查用户是否登录
+    if (!user) {
+      // 用户未登录，显示提示消息
+      alert("Please login to vote.");
+      return; // 中断表单提交
+    }
+
     setIsVoting(true);
 
     try {
@@ -137,7 +151,7 @@ const MultiLan = ({ id, head }) => {
       console.error("Error updating vote count:", error.message);
     } finally {
       setIsVoting(false);
-      fetchTranslation()
+      fetchTranslation();
     }
   };
 
@@ -181,7 +195,9 @@ const MultiLan = ({ id, head }) => {
 
               <div className="fs-5">{item.text}</div>
             </div>
-            <div className="text-secondary">Contributed by {item.user_name}</div>
+            <div className="text-secondary">
+              Contributed by {item.user_name}
+            </div>
           </div>
         </div>
       </div>
@@ -247,7 +263,12 @@ const MultiLan = ({ id, head }) => {
             className="collapse border mt-4 w-100 shadow-sm rounded bg-light"
             id="collapseSub"
           >
-            <SubForm lan={lan} head={head} id = {id} onSubFormSubmit={handleRefresh} />
+            <SubForm
+              lan={lan}
+              head={head}
+              id={id}
+              onSubFormSubmit={handleRefresh}
+            />
           </div>
 
           <div>

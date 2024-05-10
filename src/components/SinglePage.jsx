@@ -27,6 +27,13 @@ export default function SinglePage() {
   const isDisputed = false;
 
   const handleUpVote = async () => {
+    // 检查用户是否登录
+    if (!user) {
+      // 用户未登录，显示提示消息
+      alert("Please login to vote.");
+      return; // 中断表单提交
+    }
+
     setIsVoting(true);
 
     const { data, error } = await supabase
@@ -49,6 +56,13 @@ export default function SinglePage() {
   };
 
   const handleDownVote = async () => {
+      // 检查用户是否登录
+      if (!user) {
+        // 用户未登录，显示提示消息
+        alert("Please login to vote.");
+        return; // 中断表单提交
+      }
+
     setIsVoting(true);
 
     const { data, error } = await supabase

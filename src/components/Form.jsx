@@ -30,7 +30,15 @@ export default function Form() {
   };
 
   const handlePost = async (event) => {
+    // prevent defaulst submit
     event.preventDefault();
+
+    // 检查用户是否登录
+    if (!user) {
+      // 用户未登录，显示提示消息
+      alert("Please login to submit the form.");
+      return; // 中断表单提交
+    }
 
     //2-check data is valid or not
     if (formData.fact && formData.category && formData.source) {

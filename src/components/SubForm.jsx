@@ -3,15 +3,23 @@ import { CATEGORIES } from "../../data";
 import supabase from "../database.js";
 import { usePosts } from "../provider/PostContext";
 
-export default function Form({lan, head, id, onSubFormSubmit }) {
+export default function Form({ lan, head, id, onSubFormSubmit }) {
   const { user } = usePosts();
   const [isUploading, setIsUploading] = useState(false);
   const [translation_text, setTranslation_text] = useState("");
 
-  const handlePost = async(event)=>{
+  const handlePost = async (event) => {
     event.preventDefault();
+
+    // 检查用户是否登录
+    if (!user) {
+      // 用户未登录，显示提示消息
+      alert("Please login to submit the form.");
+      return; // 中断表单提交
+    }
+
     // Process form data here (e.g., send it to a server)
-    if(translation_text){
+    if (translation_text) {
       try {
         setIsUploading(true);
         const { data, error } = await supabase
@@ -22,9 +30,9 @@ export default function Form({lan, head, id, onSubFormSubmit }) {
               head: head,
               language: lan,
               text: translation_text,
-              vote_sub:0,
+              vote_sub: 0,
               user_acct: user.email,
-              user_name:user.name,
+              user_name: user.name,
             },
           ])
           .select();
@@ -34,7 +42,7 @@ export default function Form({lan, head, id, onSubFormSubmit }) {
         }
 
         //4-reset input fields
-        setTranslation_text("")
+        setTranslation_text("");
 
         setIsUploading(false);
 
@@ -47,13 +55,13 @@ export default function Form({lan, head, id, onSubFormSubmit }) {
         console.error("Error inserting fact:", error.message);
       }
     }
-  }
+  };
 
   // react form
   const handleChange = (event) => {
-    const {value} = event.target
-    setTranslation_text(value)
-  }
+    const { value } = event.target;
+    setTranslation_text(value);
+  };
 
   return (
     <div className="">
@@ -72,7 +80,7 @@ export default function Form({lan, head, id, onSubFormSubmit }) {
               <input
                 required
                 type="text"
-                name = "head"
+                name="head"
                 value={translation_text}
                 onChange={handleChange}
                 class="form-control"
@@ -81,7 +89,6 @@ export default function Form({lan, head, id, onSubFormSubmit }) {
             </div>
           </div>
 
-        
           <div className="col-12 mt-2">
             <button
               type="submit"

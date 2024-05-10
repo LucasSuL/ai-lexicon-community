@@ -23,15 +23,15 @@ const Feature = () => {
         </p>
       </div>
 
-      <div className="mt-5 d-flex gap-3">
+      <div className="mt-4 d-flex gap-3">
         <SearchForm />
         <button
           type="button"
           className="btn text-light"
           data-bs-toggle="collapse"
-          data-bs-target="#collapseExample"
+          data-bs-target="#mainForm"
           aria-expanded="false"
-          aria-controls="collapseExample"
+          aria-controls="mainForm"
           onClick={() => handleShowForm()}
           style={{
             backgroundColor: showForm ? "#ef4444" : "#198754",
@@ -55,7 +55,7 @@ const Feature = () => {
       </div>
       <div
         className="collapse border mt-4 w-100 shadow-sm rounded bg-light"
-        id="collapseExample"
+        id="mainForm"
       >
         <Form />
       </div>
