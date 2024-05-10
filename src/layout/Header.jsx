@@ -2,17 +2,15 @@ import React, { useEffect, useState } from "react";
 import { usePosts } from "../provider/PostContext";
 
 export default function Header() {
-  // const storedUser = sessionStorage.getItem("user");
-  // const [user, setUser] = useState(storedUser ? JSON.parse(storedUser) : null);
 
   const {user, setUser} =  usePosts();
-  
+
   function handleSignOut(e) {
     // 清除会话存储中的用户信息
     sessionStorage.removeItem("user");
     // 显示登录按钮
     document.getElementById("signInDiv").hidden = false;
-    // 更新用户状态为 null
+    // 更新用户State为 null
     setUser(null);
   }
 
@@ -24,7 +22,9 @@ export default function Header() {
   return (
     <nav className="navbar navbar-expand-lg">
       <div className="container-fluid">
-        <a className="navbar-brand" href="/">
+        <a className="navbar-brand" href="/ai-lexicon-community/">
+
+          {/* 设置绝对路径，handle github.io 上的路径问题 */}
           <div className="d-flex align-items-center">
             <img src="./logo.png" className="ms-0 logo me-3" />
             <p className="fw-bold text-dark m-0 fs-4 text-uppercase d-none d-sm-block font-ave-b">
