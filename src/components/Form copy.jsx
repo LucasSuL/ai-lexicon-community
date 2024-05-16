@@ -54,7 +54,7 @@ export default function Form() {
               source: formData.source,
               category: formData.category,
               userAcct: user.email,
-              user_name: user.name,
+              user_name:user.name,
             },
           ])
           .select();
@@ -65,7 +65,7 @@ export default function Form() {
 
         //4-reset input fields
         setFormData({
-          head: "",
+          head:"",
           fact: "",
           source: "",
           category: "",
@@ -95,8 +95,9 @@ export default function Form() {
     <div className="mt-3">
       <form
         className="p-3 mb-3 needs-validation"
+        action=""
         onSubmit={handlePost}
-        novalidate
+        noValidate
       >
         <div className="row">
           <div className="col-6 ">
@@ -107,7 +108,7 @@ export default function Form() {
               <input
                 required
                 type="text"
-                name="head"
+                name = "head"
                 value={formData.head}
                 onChange={handleChange}
                 className="form-control"
@@ -173,24 +174,7 @@ export default function Form() {
               </select>
             </div>
           </div>
-          <div className="col-12">
-            <div className="form-check mt-3">
-              <input
-                className="form-check-input"
-                type="checkbox"
-                value=""
-                id="invalidCheck"
-                required
-              />
-              <label className="form-check-label" for="invalidCheck">
-                Agree to terms and conditions
-              </label>
-              <div class="invalid-feedback">
-                You must agree before submitting.
-              </div>
-            </div>
-          </div>
-          <div className="col-12 mt-3">
+          <div className="col-12 mt-5">
             <button
               type="submit"
               disabled={isUploading}

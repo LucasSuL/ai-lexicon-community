@@ -69,27 +69,42 @@ export default function Form({ lan, head, id, onSubFormSubmit }) {
         className="p-3 mb-3 needs-validation"
         action=""
         onSubmit={handlePost}
-        noValidate
+        novalidate
       >
         <div className="row">
           <div className="col-6 ">
             <div className="mb-3">
-              <label htmlFor="head" className="form-label">
-                Name of the Terminology
+              <label for="validationCustom01" class="form-label">
+                Your translation
               </label>
               <input
-                required
                 type="text"
-                name="head"
+                class="form-control"
+                id="validationCustom01"
                 value={translation_text}
                 onChange={handleChange}
-                className="form-control"
-                placeholder=""
+                required
               />
             </div>
           </div>
-
-          <div className="col-12 mt-2">
+          <div class="col-12">
+            <div class="form-check">
+              <input
+                class="form-check-input"
+                type="checkbox"
+                value=""
+                id="invalidCheck"
+                required
+              />
+              <label class="form-check-label" for="invalidCheck">
+                Agree to terms and conditions
+              </label>
+              <div class="invalid-feedback">
+                You must agree before submitting.
+              </div>
+            </div>
+          </div>
+          <div className="col-12 mt-3">
             <button
               type="submit"
               disabled={isUploading}
