@@ -47,29 +47,42 @@ function PostProvider({ children, isLoaded, setIsLoaded }) {
   }, [selectedCategory, searchKeyword]);
 
   useEffect(() => {
-    // 检查会话存储中是否有用户信息
-    const storedUser = sessionStorage.getItem("user");
-    if (storedUser) {
-      const userObj = JSON.parse(storedUser);
-      sessionStorage.setItem("user", JSON.stringify(userObj));
-      document.getElementById("signInDiv").hidden = true;
-    } else {
-      // 如果没有用户信息，显示登录按钮
-      document.getElementById("signInDiv").hidden = false;
-    }
+    const loadGoogleScript = () => {
+      return new Promise((resolve) => {
+        const script = document.createElement("script");
+        script.src = "https://accounts.google.com/gsi/client";
+        script.async = true;
+        script.defer = true;
+        script.onload = resolve;
+        document.body.appendChild(script);
+      });
+    };
 
-    /* global google */
-    google.accounts.id.initialize({
-      client_id:
-        "574847166176-q8555hjl1s1pctmqhk2klpq879degm3j.apps.googleusercontent.com",
-      callback: handleCallbackResponse,
-    });
-    google.accounts.id.renderButton(document.getElementById("signInDiv"), {
-      theme: "outline",
-      size: "large",
-    });
+    loadGoogleScript().then(() => {
+      // 检查会话存储中是否有用户信息
+      const storedUser = sessionStorage.getItem("user");
+      if (storedUser) {
+        const userObj = JSON.parse(storedUser);
+        sessionStorage.setItem("user", JSON.stringify(userObj));
+        document.getElementById("signInDiv").hidden = true;
+      } else {
+        // 如果没有用户信息，显示登录按钮
+        document.getElementById("signInDiv").hidden = false;
+      }
 
-    google.accounts.id.prompt();
+      /* global google */
+      google.accounts.id.initialize({
+        client_id:
+          "574847166176-q8555hjl1s1pctmqhk2klpq879degm3j.apps.googleusercontent.com",
+        callback: handleCallbackResponse,
+      });
+      google.accounts.id.renderButton(document.getElementById("signInDiv"), {
+        theme: "outline",
+        size: "large",
+      });
+
+      google.accounts.id.prompt();
+    });
   }, []);
 
   function handleCallbackResponse(response) {
@@ -78,7 +91,7 @@ function PostProvider({ children, isLoaded, setIsLoaded }) {
     document.getElementById("signInDiv").hidden = true;
 
     // setUser
-    setUser(userObj)
+    setUser(userObj);
   }
 
   return (
