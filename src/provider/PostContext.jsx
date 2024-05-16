@@ -63,6 +63,10 @@ function PostProvider({ children, isLoaded, setIsLoaded }) {
       const storedUser = sessionStorage.getItem("user");
       if (storedUser) {
         const userObj = JSON.parse(storedUser);
+
+        // setUser immediately so that header can get the user picture.
+        setUser(userObj);
+
         sessionStorage.setItem("user", JSON.stringify(userObj));
         document.getElementById("signInDiv").hidden = true;
       } else {
@@ -88,10 +92,10 @@ function PostProvider({ children, isLoaded, setIsLoaded }) {
   function handleCallbackResponse(response) {
     const userObj = jwtDecode(response.credential);
     sessionStorage.setItem("user", JSON.stringify(userObj));
-    document.getElementById("signInDiv").hidden = true;
-
     // setUser
     setUser(userObj);
+
+    document.getElementById("signInDiv").hidden = true;
   }
 
   return (
