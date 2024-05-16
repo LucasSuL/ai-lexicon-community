@@ -51,6 +51,8 @@ export default function Form({ lan, head, id, onSubFormSubmit }) {
 
         // refresh parent
         onSubFormSubmit();
+        confetti();
+
       } catch (error) {
         console.error("Error inserting fact:", error.message);
       }

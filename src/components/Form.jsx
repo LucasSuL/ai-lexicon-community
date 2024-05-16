@@ -74,6 +74,7 @@ export default function Form() {
         //5-add the fact to state
         setFactList([newFact[0], ...factList]);
         setIsUploading(false);
+        confetti();
 
         //6-close the form
         // setShowForm(false);
