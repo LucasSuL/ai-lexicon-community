@@ -27,7 +27,7 @@ export default function Header() {
         <a className="navbar-brand" href="/ai-lexicon-community/">
           
           <div className="d-flex align-items-center">
-            <img src="./logo.png" className="ms-0 logo me-3" />
+            <img src="/ai-lexicon-community/logo.png" className="ms-0 logo me-3" />
             <p className="fw-bold text-dark m-0 fs-4 text-uppercase d-none d-sm-block font-ave-b">
               AI Lexicon Community
             </p>

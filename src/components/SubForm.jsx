@@ -22,6 +22,33 @@ export default function Form({ lan, head, id, onSubFormSubmit }) {
     if (translation_text) {
       try {
         setIsUploading(true);
+
+        // 检查是否有重复的记录
+        const { data: existingTranslation, error: checkError } = await supabase
+          .from("translations")
+          .select("id")
+          .eq("fact_id", id)
+          .eq("head", head)
+          .eq("language", lan)
+          .eq("text", translation_text)
+          .single();
+
+        if (checkError && checkError.code !== "PGRST116") {
+          // 116: no data returned
+          throw new Error(checkError.message);
+        }
+
+        if (existingTranslation) {
+          alert(
+            "This translation already exists. Please provide a unique translation."
+          );
+          // reset input fields
+          setTranslation_text("");
+
+          setIsUploading(false);
+          return; // 中断表单提交
+        }
+
         const { data, error } = await supabase
           .from("translations")
           .insert([
@@ -52,7 +79,6 @@ export default function Form({ lan, head, id, onSubFormSubmit }) {
         // refresh parent
         onSubFormSubmit();
         confetti();
-
       } catch (error) {
         console.error("Error inserting fact:", error.message);
       }

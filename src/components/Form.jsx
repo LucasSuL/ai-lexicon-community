@@ -44,6 +44,30 @@ export default function Form() {
     if (formData.fact && formData.category && formData.source) {
       //3-insert data to supabase
       try {
+        // 先检查 'head' 是否已经存在
+        const { data: existingFact, error: checkError } = await supabase
+          .from("facts")
+          .select("head")
+          .eq("head", formData.head)
+          .single();
+
+        if (checkError && checkError.code !== "PGRST116") {
+          // 116: no data returned
+          throw new Error(checkError.message);
+        }
+
+        if (existingFact) {
+          alert("This terminology already exists. Please provide a unique terminology.");
+          // reset input fields
+          setFormData({
+            head: "",
+            fact: "",
+            source: "",
+            category: "",
+          });
+          return; // 中断表单提交
+        }
+
         setIsUploading(true);
         const { data: newFact, error } = await supabase
           .from("facts")
