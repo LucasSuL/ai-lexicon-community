@@ -5,7 +5,6 @@ import Feature from "./Feature";
 import { usePosts } from "../provider/PostContext";
 import Loader from "../components/Loader";
 import FilterShow from "./FilterShow";
-import SearchForm from "../components/SearchForm";
 
 export default function Content() {
   const { factList, isLoaded, setSelectedCategory } = usePosts();

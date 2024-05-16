@@ -73,8 +73,8 @@ export default function Form({ lan, head, id, onSubFormSubmit }) {
       >
         <div className="row">
           <div className="col-6 ">
-            <div class="mb-3">
-              <label htmlFor="head" class="form-label">
+            <div className="mb-3">
+              <label htmlFor="head" className="form-label">
                 Name of the Terminology
               </label>
               <input
@@ -83,7 +83,7 @@ export default function Form({ lan, head, id, onSubFormSubmit }) {
                 name="head"
                 value={translation_text}
                 onChange={handleChange}
-                class="form-control"
+                className="form-control"
                 placeholder=""
               />
             </div>

@@ -7,7 +7,7 @@ import MultiLan from "./MultiLan.jsx";
 import supabase from "../database.js";
 
 export default function SinglePage() {
-  const { user, setUser, factList } = usePosts();
+  const { user, factList } = usePosts();
   const [isVoting, setIsVoting] = useState(false);
   const { id } = useParams();
 
@@ -26,19 +26,52 @@ export default function SinglePage() {
   // TODO
   const isDisputed = false;
 
-  const handleUpVote = async () => {
-    // 检查用户是否登录
+  const handleVote = async (increment) => {
+    // Check if the user is logged in
     if (!user) {
-      // 用户未登录，显示提示消息
+      // User is not logged in, display a prompt message
       alert("Please login to vote.");
-      return; // 中断表单提交
+      return; // Abort the form submission
     }
 
     setIsVoting(true);
 
+    // Retrieve the current 'user_voted' array from the database
+    const { data: factData, error: factError } = await supabase
+      .from("facts")
+      .select("user_voted")
+      .eq("id", fact.id)
+      .single();
+
+    // Check for errors
+    if (factError) {
+      console.error("Error retrieving user_voted array:", factError.message);
+      setIsVoting(false);
+      return;
+    }
+
+    const currentUserVotedArray = factData.user_voted || []; // Handle case when user_voted is null
+
+    // Check if the user's email is already in the array
+    if (currentUserVotedArray.includes(user.email)) {
+      // User has already voted, display an alert and abort
+      alert("You have already voted. You cannot vote again.");
+      setIsVoting(false);
+      return; // Abort the form submission
+    }
+
+    // Append the user's email to the 'user_voted' array
+    currentUserVotedArray.push(user.email);
+    const voteIncrement = increment ? 1 : -1;
+    const newVotesMain = fact.votesMain + voteIncrement;
+
+    // Update the 'user_voted' column with the new array
     const { data, error } = await supabase
       .from("facts")
-      .update({ votesMain: fact.votesMain + 1 })
+      .update({
+        votesMain: newVotesMain,
+        user_voted: currentUserVotedArray,
+      })
       .eq("id", fact.id)
       .select();
 
@@ -52,36 +85,15 @@ export default function SinglePage() {
     setIsVoting(false);
 
     // update value
-    fact.votesMain = fact.votesMain + 1;
+    fact.votesMain = newVotesMain;
   };
 
-  const handleDownVote = async () => {
-      // 检查用户是否登录
-      if (!user) {
-        // 用户未登录，显示提示消息
-        alert("Please login to vote.");
-        return; // 中断表单提交
-      }
+  const handleUpVote = () => {
+    handleVote(true);
+  };
 
-    setIsVoting(true);
-
-    const { data, error } = await supabase
-      .from("facts")
-      .update({ votesMain: fact.votesMain - 1 })
-      .eq("id", fact.id)
-      .select();
-
-    // Check for errors
-    if (error) {
-      console.error("Error updating vote count:", error.message);
-      setIsVoting(false);
-      return;
-    }
-
-    setIsVoting(false);
-
-    // update value
-    fact.votesMain = fact.votesMain - 1;
+  const handleDownVote = () => {
+    handleVote(false);
   };
 
   return (

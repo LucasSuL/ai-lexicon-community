@@ -1,7 +1,6 @@
 import React from "react";
 import { CATEGORIES } from "../../data";
 import { Link } from "react-router-dom";
-import { usePosts } from "../provider/PostContext";
 
 export default function Fact({ fact }) {
   const categoryObject = CATEGORIES.find(

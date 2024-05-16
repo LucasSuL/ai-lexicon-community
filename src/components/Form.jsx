@@ -101,8 +101,8 @@ export default function Form() {
       >
         <div className="row">
           <div className="col-6 ">
-            <div class="mb-3">
-              <label htmlFor="head" class="form-label">
+            <div className="mb-3">
+              <label htmlFor="head" className="form-label">
                 Name of the Terminology
               </label>
               <input
@@ -111,7 +111,7 @@ export default function Form() {
                 name = "head"
                 value={formData.head}
                 onChange={handleChange}
-                class="form-control"
+                className="form-control"
                 // id="exampleFormControlInput1"
                 placeholder=""
               />

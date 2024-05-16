@@ -83,62 +83,65 @@ const MultiLan = ({ id, head }) => {
     }
   };
 
-  const handleVote = async (id, vote_sub, increment) => {
+  const handleUpVote = async (id, vote_sub) => {
     // 检查用户是否登录
     if (!user) {
       // 用户未登录，显示提示消息
       alert("Please login to vote.");
       return; // 中断表单提交
     }
-  
+
     setIsVoting(true);
-  
+
+    // NEW
+
+    // Retrieve the current 'user_voted' array from the database
+    const { data: factData, error: factError } = await supabase
+      .from("translations")
+      .select("user_voted")
+      .eq("id", id)
+      .single();
+
+    // Check for errors
+    if (factError) {
+      console.error("Error retrieving user_voted array:", factError.message);
+      setIsVoting(false);
+      return;
+    }
+
+    const currentUserVotedArray = factData.user_voted || []; // Handle case when user_voted is null
+
+    // Check if the user's email is already in the array
+    if (currentUserVotedArray.includes(user.email)) {
+      // User has already voted, display an alert and abort
+      alert("You have already voted. You cannot vote again.");
+      setIsVoting(false);
+      return; // Abort the form submission
+    }
+
+    // Append the user's email to the 'user_voted' array
+    currentUserVotedArray.push(user.email);
+
     try {
-      // Retrieve the current 'user_voted' array from the database
-      const { data: factData, error: factError } = await supabase
-        .from("translations")
-        .select("user_voted")
-        .eq("id", id)
-        .single();
-  
-      // Check for errors
-      if (factError) {
-        console.error("Error retrieving user_voted array:", factError.message);
-        return;
-      }
-  
-      const currentUserVotedArray = factData.user_voted || []; // Handle case when user_voted is null
-  
-      // Check if the user's email is already in the array
-      if (currentUserVotedArray.includes(user.email)) {
-        // User has already voted, display an alert and abort
-        alert("You have already voted. You cannot vote again.");
-        return; // Abort the form submission
-      }
-  
-      // Append the user's email to the 'user_voted' array
-      currentUserVotedArray.push(user.email);
-  
-      // Calculate the new vote count based on the increment value
-      const newVoteSub = increment ? vote_sub + 1 : vote_sub - 1;
-  
       // Update the 'user_voted' column with the new array
       const { data, error } = await supabase
         .from("translations")
         .update({
-          vote_sub: newVoteSub,
+          vote_sub: vote_sub + 1,
           user_voted: currentUserVotedArray,
         })
         .eq("id", id)
         .select();
-  
+
       if (error) {
         throw new Error(error.message);
       }
-  
+
       // 找到更新后的翻译项并更新状态
       const updatedTranslations = translations.map((translation) =>
-        translation.id === id ? { ...translation, vote_sub: newVoteSub } : translation
+        translation.id === id
+          ? { ...translation, vote_sub: translation.vote_sub + 1 }
+          : translation
       );
       setTranslations(updatedTranslations);
     } catch (error) {
@@ -148,15 +151,75 @@ const MultiLan = ({ id, head }) => {
       fetchTranslation();
     }
   };
-  
-  const handleUpVote = (id, vote_sub) => {
-    handleVote(id, vote_sub, true);
+
+  const handleDownVote = async (id, vote_sub) => {
+     // 检查用户是否登录
+     if (!user) {
+      // 用户未登录，显示提示消息
+      alert("Please login to vote.");
+      return; // 中断表单提交
+    }
+
+    setIsVoting(true);
+
+    // NEW
+
+    // Retrieve the current 'user_voted' array from the database
+    const { data: factData, error: factError } = await supabase
+      .from("translations")
+      .select("user_voted")
+      .eq("id", id)
+      .single();
+
+    // Check for errors
+    if (factError) {
+      console.error("Error retrieving user_voted array:", factError.message);
+      setIsVoting(false);
+      return;
+    }
+
+    const currentUserVotedArray = factData.user_voted || []; // Handle case when user_voted is null
+
+    // Check if the user's email is already in the array
+    if (currentUserVotedArray.includes(user.email)) {
+      // User has already voted, display an alert and abort
+      alert("You have already voted. You cannot vote again.");
+      setIsVoting(false);
+      return; // Abort the form submission
+    }
+
+    // Append the user's email to the 'user_voted' array
+    currentUserVotedArray.push(user.email);
+
+    try {
+      // Update the 'user_voted' column with the new array
+      const { data, error } = await supabase
+        .from("translations")
+        .update({
+          vote_sub: vote_sub - 1,
+          user_voted: currentUserVotedArray,
+        })
+        .eq("id", id)
+        .select();
+
+      if (error) {
+        throw new Error(error.message);
+      }
+
+      // 找到更新后的翻译项并更新状态
+      const updatedTranslations = translations.map((translation) =>
+        translation.id === id
+          ? { ...translation, vote_sub: translation.vote_sub - 1 }
+          : translation
+      );
+      setTranslations(updatedTranslations);
+    } catch (error) {
+      console.error("Error updating vote count:", error.message);
+    } finally {
+      setIsVoting(false);
+      fetchTranslation();
+    }
   };
-  
-  const handleDownVote = (id, vote_sub) => {
-    handleVote(id, vote_sub, false);
-  };
-  
 
   const TransSection = () => {
     return translations.map((item) => (
