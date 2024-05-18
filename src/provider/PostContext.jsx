@@ -91,6 +91,7 @@ function PostProvider({ children, isLoaded, setIsLoaded }) {
 
   function handleCallbackResponse(response) {
     const userObj = jwtDecode(response.credential);
+    console.log(userObj);
     sessionStorage.setItem("user", JSON.stringify(userObj));
     // setUser
     setUser(userObj);

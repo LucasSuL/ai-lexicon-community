@@ -4,7 +4,7 @@ import Fact from "../components/Fact";
 import Feature from "./Feature";
 import { usePosts } from "../provider/PostContext";
 import Loader from "../components/Loader";
-import FilterShow from "./FilterShow";
+import FilterShow from "../components/FilterShow";
 
 export default function Content() {
   const { factList, isLoaded, setSelectedCategory } = usePosts();
