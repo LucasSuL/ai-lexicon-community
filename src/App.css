@@ -33,6 +33,9 @@ body {
   src: url("/fonts/AvenirLTProHeavy.otf") format("opentype"); 
 }
 
+/* a :hover{
+  cursor: pointer !important
+} */
 .font-ave{
   font-family: "Avenir", sans-serif;
 }

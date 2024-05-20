@@ -17,6 +17,7 @@ export default function Fact({ fact }) {
           className="me-2 font-ave-b text-capitalize"
           style={{ color: "inherit", textDecoration: "inherit" }}
           to={`/ai-lexicon-community/entries/${fact.id}`}
+          // type="main"
         >
           {fact.head}:
         </Link>
@@ -27,9 +28,9 @@ export default function Fact({ fact }) {
           {fact.text}
         </Link>
 
-        <a href={fact.source} className="source ms-1" target="_blank">
+        {/* <a href={fact.source} className="source ms-1" target="_blank">
           (Source)
-        </a>
+        </a> */}
       </div>
       <div className="col-8 col-lg-3">
         <div

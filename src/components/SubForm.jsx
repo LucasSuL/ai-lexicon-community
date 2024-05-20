@@ -130,6 +130,12 @@ export default function Form({ lan, head, id, onSubFormSubmit }) {
               <div class="invalid-feedback">
                 You must agree before submitting.
               </div>
+              <a
+                href="#term"
+                class="link-dark link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover"
+              >
+                (See more)
+              </a>
             </div>
           </div>
           <div className="col-12 mt-3">

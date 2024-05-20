@@ -2,12 +2,12 @@ import React, { useEffect, useState } from "react";
 import { CATEGORIES } from "../../data.json";
 import { Link } from "react-router-dom";
 import { useParams } from "react-router-dom";
-import { usePosts } from "../provider/PostContext";
+import { usePosts } from "../provider/PostContext.jsx";
 import MultiLan from "./MultiLan.jsx";
 import supabase from "../database.js";
 
 export default function SinglePage() {
-  const { user, factList } = usePosts();
+  const { user, factList, latest } = usePosts();
   const [isVoting, setIsVoting] = useState(false);
   const { id } = useParams();
 
@@ -16,7 +16,12 @@ export default function SinglePage() {
   }, [user]);
 
   const factId = parseInt(id); // Convert id to integer
-  const fact = factList.find((fact) => fact.id === factId);
+  let fact = factList.find((fact) => fact.id === factId);
+
+  // if cannot find in original main array, search in latest array
+  if (!fact) {
+    fact = latest.find((fact) => fact.id === factId);
+  }
 
   const categoryObject = CATEGORIES.find(
     (category) => category.name === fact.category
@@ -146,7 +151,7 @@ export default function SinglePage() {
             </div>
 
             {/* source */}
-            <div className="d-flex mt-3 text-secondary">
+            {/* <div className="d-flex mt-3 text-secondary">
               <p className="w-100">
                 <strong>Source:</strong>
                 <a
@@ -157,10 +162,12 @@ export default function SinglePage() {
                   {fact.source}
                 </a>
               </p>
-            </div>
+            </div> */}
 
             {/* user */}
-            <div>Contributed by {fact.user_name}</div>
+            <div className="text-secondary">
+              Contributed by {fact.user_name}
+            </div>
           </div>
         </div>
       </div>

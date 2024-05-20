@@ -27,8 +27,8 @@ function App() {
             ></Route>
           )}
         </Routes>
-      </PostProvider>
       <Footer />
+      </PostProvider>
     </Router>
   );
 }

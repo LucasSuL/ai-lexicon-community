@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { CATEGORIES } from "../../data";
 import supabase from "../database.js";
 import { usePosts } from "../provider/PostContext";
@@ -11,10 +11,25 @@ export default function Form() {
   const [formData, setFormData] = useState({
     name: "",
     fact: "",
-    source: "",
+    // source: "",
     category: "",
     userAcct: "",
   });
+
+  useEffect(() => {
+    // 初始化所有 Popovers
+    const popoverTriggerList = document.querySelectorAll(
+      '[data-bs-toggle="popover"]'
+    );
+    const popoverList = [...popoverTriggerList].map(
+      (popoverTriggerEl) => new bootstrap.Popover(popoverTriggerEl)
+    );
+
+    // 清理函数，用于在组件卸载时销毁 Popovers
+    return () => {
+      popoverList.forEach((popover) => popover.dispose());
+    };
+  }, []); // 依赖项列表为空，以确保只在组件挂载时执行一次
 
   const handleChange = (event) => {
     const { name, value } = event.target;
@@ -41,7 +56,7 @@ export default function Form() {
     }
 
     //2-check data is valid or not
-    if (formData.fact && formData.category && formData.source) {
+    if (formData.fact && formData.category) {
       //3-insert data to supabase
       try {
         // 先检查 'head' 是否已经存在
@@ -57,12 +72,14 @@ export default function Form() {
         }
 
         if (existingFact) {
-          alert("This terminology already exists. Please provide a unique terminology.");
+          alert(
+            "This terminology already exists. Please provide a unique terminology."
+          );
           // reset input fields
           setFormData({
             head: "",
             fact: "",
-            source: "",
+            // source: "",
             category: "",
           });
           return; // 中断表单提交
@@ -75,7 +92,7 @@ export default function Form() {
             {
               head: formData.head,
               text: formData.fact,
-              source: formData.source,
+              // source: formData.source,
               category: formData.category,
               userAcct: user.email,
               user_name: user.name,
@@ -91,7 +108,7 @@ export default function Form() {
         setFormData({
           head: "",
           fact: "",
-          source: "",
+          // source: "",
           category: "",
         });
 
@@ -162,7 +179,7 @@ export default function Form() {
           </div>
 
           <div className="col-6">
-            <div className="mb-3">
+            {/* <div className="mb-3">
               <label htmlFor="source">Trustworthy Source</label>
               <div className="input-group">
                 <span className="input-group-text mt-2" id="basic-addon3">
@@ -180,7 +197,7 @@ export default function Form() {
                   id="source"
                 />
               </div>
-            </div>
+            </div> */}
             <div>
               <label htmlFor="category">Choose Category</label>
               <select
@@ -199,20 +216,37 @@ export default function Form() {
             </div>
           </div>
           <div className="col-12">
-            <div className="form-check mt-3">
+            <div className="form-check mt-3 d-flex gap-2">
               <input
-                className="form-check-input"
+                className="form-check-input "
                 type="checkbox"
                 value=""
                 id="invalidCheck"
                 required
               />
-              <label className="form-check-label" for="invalidCheck">
-                Agree to terms and conditions
+              <label
+                className="form-check-label d-flex gap-2"
+                for="invalidCheck"
+              >
+                <p>Agree to </p>
+                <p>
+                  <a
+                  // href="#"
+                  >
+                    terms and conditions.
+                  </a>
+                </p>
               </label>
               <div class="invalid-feedback">
                 You must agree before submitting.
               </div>
+
+              <a
+                href="#term"
+                class="link-dark link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover"
+              >
+                (See more)
+              </a>
             </div>
           </div>
           <div className="col-12 mt-3">

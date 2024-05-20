@@ -6,6 +6,8 @@ const PostContext = createContext();
 
 function PostProvider({ children, isLoaded, setIsLoaded }) {
   const [factList, setFactList] = useState([]);
+  const [latest, setLatest] = useState([]);
+  const [popular, setPopular] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState("all");
   const [searchKeyword, setSearchKeyword] = useState("");
 
@@ -16,20 +18,48 @@ function PostProvider({ children, isLoaded, setIsLoaded }) {
     const getFacts = async () => {
       try {
         setIsLoaded(false);
-        let query = supabase.from("facts").select("*");
+        // get from latest
+        let laQuery = supabase.from("facts").select("*");
 
-        if (selectedCategory !== "all") {
-          query = query.eq("category", selectedCategory);
+        let { data: latestData, error: latestError } = await laQuery
+          .order("created_at", { ascending: false })
+          .limit(5);
+
+        if (latestError) {
+          throw new Error(latestError.message);
         }
 
+        setLatest(latestData);
+
+        // get from popular
+        let poQuery = supabase.from("facts").select("*");
+
+        let { data: popularData, error: popularError } = await poQuery
+          .order("votesMain", { ascending: false })
+          .limit(5);
+
+        if (popularError) {
+          throw new Error(popularError.message);
+        }
+
+        setPopular(popularData);
+
+        // get from all filtered
+        let filteredQuery = supabase.from("facts").select("*");
+
+        if (selectedCategory !== "all") {
+          filteredQuery = filteredQuery.eq("category", selectedCategory);
+        }
+        // 根据搜索关键词进行筛选
         if (searchKeyword.trim() !== "") {
           console.log("search:" + searchKeyword);
-          query = query.textSearch("head_text", searchKeyword, {
+          filteredQuery = filteredQuery.textSearch("head_text", searchKeyword, {
             type: "websearch",
           });
         }
 
-        let { data: facts, error } = await query
+        // 获取筛选后的数据
+        let { data: facts, error } = await filteredQuery
           .limit(10)
           .order("votesMain", { ascending: false });
 
@@ -85,13 +115,15 @@ function PostProvider({ children, isLoaded, setIsLoaded }) {
         size: "large",
       });
 
-      google.accounts.id.prompt();
+      // do not prompt out when user has logged in
+      if (!storedUser) {
+        google.accounts.id.prompt();
+      }
     });
   }, []);
 
   function handleCallbackResponse(response) {
     const userObj = jwtDecode(response.credential);
-    console.log(userObj);
     sessionStorage.setItem("user", JSON.stringify(userObj));
     // setUser
     setUser(userObj);
@@ -112,6 +144,8 @@ function PostProvider({ children, isLoaded, setIsLoaded }) {
         setSelectedCategory,
         searchKeyword,
         setSearchKeyword,
+        latest,
+        popular,
       }}
     >
       {children}
