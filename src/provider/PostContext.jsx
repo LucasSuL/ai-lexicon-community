@@ -89,15 +89,15 @@ function PostProvider({ children, isLoaded, setIsLoaded }) {
     };
 
     loadGoogleScript().then(() => {
-      // 检查会话存储中是否有用户信息
-      const storedUser = sessionStorage.getItem("user");
+      // 检查 localStorage 中是否有用户信息
+      const storedUser = localStorage.getItem("user");
       if (storedUser) {
         const userObj = JSON.parse(storedUser);
 
         // setUser immediately so that header can get the user picture.
         setUser(userObj);
 
-        sessionStorage.setItem("user", JSON.stringify(userObj));
+        localStorage.setItem("user", JSON.stringify(userObj));
         document.getElementById("signInDiv").hidden = true;
       } else {
         // 如果没有用户信息，显示登录按钮
@@ -106,8 +106,7 @@ function PostProvider({ children, isLoaded, setIsLoaded }) {
 
       /* global google */
       google.accounts.id.initialize({
-        client_id:
-          "574847166176-q8555hjl1s1pctmqhk2klpq879degm3j.apps.googleusercontent.com",
+        client_id: "574847166176-q8555hjl1s1pctmqhk2klpq879degm3j.apps.googleusercontent.com",
         callback: handleCallbackResponse,
       });
       google.accounts.id.renderButton(document.getElementById("signInDiv"), {
@@ -124,7 +123,7 @@ function PostProvider({ children, isLoaded, setIsLoaded }) {
 
   function handleCallbackResponse(response) {
     const userObj = jwtDecode(response.credential);
-    sessionStorage.setItem("user", JSON.stringify(userObj));
+    localStorage.setItem("user", JSON.stringify(userObj));
     // setUser
     setUser(userObj);
 
