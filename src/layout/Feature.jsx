@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import Form from "../components/Form";
 import SearchForm from "../components/SearchForm";
+import {SearchBar} from "../components/SearchBar";
 
 const Feature = () => {
   const [showForm, setShowForm] = useState(false);
@@ -25,6 +26,7 @@ const Feature = () => {
 
       <div className="mt-4 d-flex gap-3">
         <SearchForm />
+        {/* <SearchBar /> */}
         <button
           type="button"
           className="btn text-light"

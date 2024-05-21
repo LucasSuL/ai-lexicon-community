@@ -6,9 +6,12 @@ import { usePosts } from "../provider/PostContext";
 import Loader from "../components/Loader";
 import FilterShow from "../components/FilterShow";
 import { Link } from "react-router-dom";
+import { Hit } from "../components/SearchBar";
+import { Hits } from "react-instantsearch-dom";
 
 export default function Content() {
-  const { factList, isLoaded, setSelectedCategory, latest, popular } = usePosts();
+  const { factList, isLoaded, setSelectedCategory, latest, popular } =
+    usePosts();
 
   const handleTagClick = (categoryName) => {
     setSelectedCategory(categoryName);
@@ -46,6 +49,7 @@ export default function Content() {
           <div className="row">
             {/* main display */}
             <div className="main col-12 col-xl-9">
+              {/* <Hits hitComponent={Hit} /> */}
               {facts.length == 0 ? (
                 <p className="m-2">
                   No facts for this selection, create your first one!
@@ -131,6 +135,7 @@ export default function Content() {
                 </a>
               </div>
             </div>
+            
           </div>
         </div>
       </div>
