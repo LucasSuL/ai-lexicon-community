@@ -52,7 +52,6 @@ function PostProvider({ children, isLoaded, setIsLoaded }) {
         }
         // 根据搜索关键词进行筛选
         if (searchKeyword.trim() !== "") {
-          // console.log("search:" + searchKeyword);
           filteredQuery = filteredQuery.ilike("head_text", `%${searchKeyword}%`);
         }
 
