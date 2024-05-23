@@ -47,13 +47,12 @@ function PostProvider({ children, isLoaded, setIsLoaded }) {
         // get from all filtered
         let filteredQuery = supabase.from("facts").select("*");
 
-        if (selectedCategory !== "all") {
-          filteredQuery = filteredQuery.eq("category", selectedCategory);
-        }
         // 根据搜索关键词进行筛选
         if (searchKeyword.trim() !== "") {
           // console.log("search:" + searchKeyword);
-          filteredQuery = filteredQuery.ilike("head_text", `%${searchKeyword}%`);
+          filteredQuery = filteredQuery.textSearch("head_text", searchKeyword, {
+            type: "websearch",
+          });
         }
 
         // 获取筛选后的数据

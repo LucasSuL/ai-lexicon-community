@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { usePosts } from "../provider/PostContext";
 import { CATEGORIES } from "../../data";
 
@@ -18,6 +18,14 @@ const FilterShow = () => {
     }
   }
 
+  // 监听搜索关键字的变化
+  useEffect(() => {
+    // 当搜索关键字为空时，重置选定的分类为 "all"
+    if (searchKeyword === "") {
+      setSelectedCategory("all");
+    }
+  }, [searchKeyword, setSelectedCategory]);
+
   return (
     <div className="container mt-5">
       <div className="d-flex align-items-center">
@@ -26,7 +34,7 @@ const FilterShow = () => {
         {selectedCategory === "all" && !searchKeyword ? (
           <div
             className="d-flex align-items-center fs-7 m-0 p-1 mx-1 px-2 rounded shadow-sm"
-            style={{ backgroundColor:"#e1e1e1" }}
+            style={{ backgroundColor: "#e1e1e1" }}
           >
             None
           </div>
