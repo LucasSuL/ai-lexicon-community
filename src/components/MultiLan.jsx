@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import supabase from "../database";
+import supabase, { admin } from "../database";
 import SubForm from "./SubForm";
 
 import fr from "/flags/fr.png";
@@ -90,9 +90,9 @@ const MultiLan = ({ id, head }) => {
       alert("Please login to vote.");
       return; // 中断表单提交
     }
-  
+
     setIsVoting(true);
-  
+
     try {
       // Retrieve the current 'user_voted' array from the database
       const { data: factData, error: factError } = await supabase
@@ -100,28 +100,28 @@ const MultiLan = ({ id, head }) => {
         .select("user_voted")
         .eq("id", id)
         .single();
-  
+
       // Check for errors
       if (factError) {
         console.error("Error retrieving user_voted array:", factError.message);
         return;
       }
-  
+
       const currentUserVotedArray = factData.user_voted || []; // Handle case when user_voted is null
-  
+
       // Check if the user's email is already in the array
       if (currentUserVotedArray.includes(user.email)) {
         // User has already voted, display an alert and abort
         alert("You have already voted. You cannot vote again.");
         return; // Abort the form submission
       }
-  
+
       // Append the user's email to the 'user_voted' array
       currentUserVotedArray.push(user.email);
-  
+
       // Calculate the new vote count based on the increment value
       const newVoteSub = increment ? vote_sub + 1 : vote_sub - 1;
-  
+
       // Update the 'user_voted' column with the new array
       const { data, error } = await supabase
         .from("translations")
@@ -131,14 +131,16 @@ const MultiLan = ({ id, head }) => {
         })
         .eq("id", id)
         .select();
-  
+
       if (error) {
         throw new Error(error.message);
       }
-  
+
       // 找到更新后的翻译项并更新状态
       const updatedTranslations = translations.map((translation) =>
-        translation.id === id ? { ...translation, vote_sub: newVoteSub } : translation
+        translation.id === id
+          ? { ...translation, vote_sub: newVoteSub }
+          : translation
       );
       setTranslations(updatedTranslations);
     } catch (error) {
@@ -148,15 +150,30 @@ const MultiLan = ({ id, head }) => {
       fetchTranslation();
     }
   };
-  
+
   const handleUpVote = (id, vote_sub) => {
     handleVote(id, vote_sub, true);
   };
-  
+
   const handleDownVote = (id, vote_sub) => {
     handleVote(id, vote_sub, false);
   };
-  
+
+  const handelDel = async () => {
+    if (window.confirm("Are you sure you want to delete?")) {
+      const { error } = await supabase
+        .from("translations")
+        .delete()
+        .eq("fact_id", id);
+
+      if (error) {
+        console.error("Error deleting translations:", error.message);
+      } else {
+        console.log("Fact deleted successfully!");
+        window.location.reload();
+      }
+    }
+  }
 
   const TransSection = () => {
     return translations.map((item) => (
@@ -188,8 +205,8 @@ const MultiLan = ({ id, head }) => {
             </div>
           </div>
 
-          <div className="d-flex flex-column gap-5">
-            <div className="d-flex align-items-center gap-2">
+          <div className="d-flex flex-column gap-5 w-100">
+            <div className="d-flex align-items-center gap-2 w-100">
               {item.vote_sub <= -5 ? (
                 <span className="text-danger fw-bold">[⛔️DISPUTED] </span>
               ) : (
@@ -198,8 +215,26 @@ const MultiLan = ({ id, head }) => {
 
               <div className="fs-5">{item.text}</div>
             </div>
-            <div className="text-secondary">
-              Contributed by {item.user_name}
+
+            <div className="d-flex justify-content-between w-100 align-items-center">
+              <div className="text-secondary">
+                Contributed by {item.user_name}
+              </div>
+
+              {/* del */}
+              {user.email === admin ? (
+                <div>
+                  <button
+                    type="button"
+                    class="btn btn-danger"
+                    onClick={() => handelDel()}
+                  >
+                    Delete
+                  </button>
+                </div>
+              ) : (
+                <></>
+              )}
             </div>
           </div>
         </div>

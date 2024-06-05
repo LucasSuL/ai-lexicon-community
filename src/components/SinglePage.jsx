@@ -4,12 +4,14 @@ import { Link } from "react-router-dom";
 import { useParams } from "react-router-dom";
 import { usePosts } from "../provider/PostContext.jsx";
 import MultiLan from "./MultiLan.jsx";
-import supabase from "../database.js";
+import supabase, { admin } from "../database.js";
+import { useNavigate } from "react-router-dom";
 
 export default function SinglePage() {
   const { user, factList, latest } = usePosts();
   const [isVoting, setIsVoting] = useState(false);
   const { id } = useParams();
+  const navigateTo = useNavigate();
 
   useEffect(() => {
     // This effect does nothing, but it triggers a re-render when user state changes
@@ -101,6 +103,34 @@ export default function SinglePage() {
     handleVote(false);
   };
 
+  const handelDel = async () => {
+    console.log(id);
+    if (window.confirm("Are you sure you want to delete?")) {
+      const { error } = await supabase
+        .from("translations")
+        .delete()
+        .eq("fact_id", id);
+
+      if (error) {
+        console.error("Error deleting translations:", error.message);
+      } else {
+        const { error1 } = await supabase.from("facts").delete().eq("id", id);
+        if (error1) {
+          console.error("Error deleting fact:", error.message);
+        } else {
+          console.log("Fact deleted successfully!");
+          // push back to home page
+          navigateTo("/ai-lexicon-community/");
+
+          // Delay for 500 milliseconds before reloading the page
+          setTimeout(() => {
+            window.location.reload();
+          }, 200);
+        }
+      }
+    }
+  };
+
   return (
     <div className="container">
       <div className="bg-white shadow p-3 py-4 mt-3 rounded-4">
@@ -131,7 +161,7 @@ export default function SinglePage() {
             </div>
           </div>
 
-          <div>
+          <div className="w-100">
             {/* label */}
             <div
               className="mt-3 tag d-inline p-1 px-3 justify-content-center align-items-center rounded fw-bold m-0"
@@ -150,23 +180,25 @@ export default function SinglePage() {
               <p className="fs-5">{fact.text}</p>
             </div>
 
-            {/* source */}
-            {/* <div className="d-flex mt-3 text-secondary">
-              <p className="w-100">
-                <strong>Source:</strong>
-                <a
-                  href="#"
-                  className="link-secondary link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover ms-1"
-                >
-                  {" "}
-                  {fact.source}
-                </a>
-              </p>
-            </div> */}
-
-            {/* user */}
-            <div className="text-secondary">
-              Contributed by {fact.user_name}
+            <div className="d-flex justify-content-between w-100 align-items-center">
+              {/* user */}
+              <div className="text-secondary">
+                Contributed by {fact.user_name}
+              </div>
+              {/* del */}
+              {user.email === admin ? (
+                <div>
+                  <button
+                    type="button"
+                    class="btn btn-danger"
+                    onClick={() => handelDel()}
+                  >
+                    Delete
+                  </button>
+                </div>
+              ) : (
+                <></>
+              )}
             </div>
           </div>
         </div>
