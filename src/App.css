@@ -11,7 +11,6 @@ body {
   );
   color: rgb(39, 39, 39);
   font-family: "Avenir", sans-serif;
-
 }
 
 * {
@@ -24,40 +23,68 @@ body {
 }
 
 @font-face {
-  font-family: "Avenir-Bold"; 
-  src: url("/fonts/AvenirLTProBlack.otf") format("opentype"); 
+  font-family: "Avenir-Bold";
+  src: url("/fonts/AvenirLTProBlack.otf") format("opentype");
 }
 
 @font-face {
-  font-family: "Avenir"; 
-  src: url("/fonts/AvenirLTProHeavy.otf") format("opentype"); 
+  font-family: "Avenir";
+  src: url("/fonts/AvenirLTProHeavy.otf") format("opentype");
 }
 
 /* a :hover{
   cursor: pointer !important
 } */
-.font-ave{
+.font-ave {
   font-family: "Avenir", sans-serif;
 }
 
-.font-ave-b{
+.font-ave-b {
   font-family: "Avenir-Bold", sans-serif;
+}
+
+.roboto-thin {
+  font-family: "Roboto", sans-serif;
+  font-weight: 100;
+  font-style: normal;
+}
+
+.roboto-light {
+  font-family: "Roboto", sans-serif;
+  font-weight: 300;
+  font-style: normal;
+}
+
+.roboto-regular {
+  font-family: "Roboto", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+}
+
+.roboto-medium {
+  font-family: "Roboto", sans-serif;
+  font-weight: 500;
+  font-style: normal;
+}
+.roboto-bold {
+  font-family: "Roboto", sans-serif;
+  font-weight: 700;
+  font-style: normal;
 }
 
 h1 {
   text-transform: uppercase;
 }
 
-.fs-7{
+.fs-7 {
   font-size: 13px;
 }
 
-.fs-8{
+.fs-8 {
   font-size: 11px;
-
 }
 .cust-title {
-  background: linear-gradient(to bottom right, black,rgb(56, 56, 56), #999999);
+  background: linear-gradient(to bottom right, black, rgb(56, 56, 56), #999999);
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;

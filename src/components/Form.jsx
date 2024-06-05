@@ -141,7 +141,7 @@ export default function Form() {
         novalidate
       >
         <div className="row">
-          <div className="col-6 ">
+          <div className="col-12 col-md-6 ">
             <div className="mb-3">
               <label htmlFor="head" className="form-label">
                 Name of the Terminology
@@ -178,7 +178,7 @@ export default function Form() {
             </div>
           </div>
 
-          <div className="col-6">
+          <div className="col-12 col-md-6 ">
             {/* <div className="mb-3">
               <label htmlFor="source">Trustworthy Source</label>
               <div className="input-group">

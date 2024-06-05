@@ -36,10 +36,10 @@ const Feature = () => {
           onClick={() => handleShowForm()}
           style={{
             backgroundColor: showForm ? "#ef4444" : "#198754",
-            width: "100px",
+            width: "300px",
           }}
         >
-          {showForm ? "Close" : "  Post"}
+          {showForm ? "Close" : "Upload Terminology"}
         </button>
 
         {/* <a

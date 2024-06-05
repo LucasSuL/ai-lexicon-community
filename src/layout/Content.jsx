@@ -127,7 +127,7 @@ export default function Content() {
             </div>
 
             <div className="container ">
-              <div className="d-flex justify-content-end m-2">
+              <div className="d-flex justify-content-end m-2 roboto-regular">
                 <a href="#">
                   <button className="btn btn-sm">Back to top{" \u2191"}</button>
                 </a>

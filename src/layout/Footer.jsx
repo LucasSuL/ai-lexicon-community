@@ -47,8 +47,8 @@ const Footer = () => {
       <div className="row">
         <div className="container mt-5 col-12 col-xl-8" id="term">
           <p className="fs-5">Terms and conditions</p>
-          <p className="text-secondary ">
-            Terms and conditions: By using this community website, users agree
+          <p className="text-secondary roboto-light">
+            By using this community website, users agree
             to actively contribute high-quality content and refrain from posting
             inappropriate material, including but not limited to obscene,
             violent, defamatory, discriminatory, or illegal content. The

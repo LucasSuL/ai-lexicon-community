@@ -217,8 +217,8 @@ const MultiLan = ({ id, head }) => {
             </div>
 
             <div className="d-flex justify-content-between w-100 align-items-center">
-              <div className="text-secondary">
-                Contributed by {item.user_name}
+              <div className="text-secondary roboto-regular">
+                Contributed by <span className="roboto-bold text-dark">{item.user_name}</span>
               </div>
 
               {/* del */}

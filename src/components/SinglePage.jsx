@@ -182,8 +182,9 @@ export default function SinglePage() {
 
             <div className="d-flex justify-content-between w-100 align-items-center">
               {/* user */}
-              <div className="text-secondary">
-                Contributed by {fact.user_name}
+              <div className="text-secondary roboto-regular">
+                Contributed by{" "}
+                <span className="roboto-bold text-dark">{fact.user_name}</span>
               </div>
               {/* del */}
               {user?.email === admin ? (
@@ -212,6 +213,7 @@ export default function SinglePage() {
         <Link
           to="/ai-lexicon-community/"
           style={{ color: "inherit", textDecoration: "inherit" }}
+          className="roboto-regular"
         >
           {"\u2190 "}Back to Home
         </Link>

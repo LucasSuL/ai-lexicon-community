@@ -125,14 +125,14 @@ export default function Form({ lan, head, id, onSubFormSubmit }) {
                 required
               />
               <label class="form-check-label" for="invalidCheck">
-                Agree to terms and conditions
+                Agree to terms and conditions.
               </label>
               <div class="invalid-feedback">
                 You must agree before submitting.
               </div>
               <a
                 href="#term"
-                class="link-dark link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover"
+                class="link-dark link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover ms-2"
               >
                 (See more)
               </a>
