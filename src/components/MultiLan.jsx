@@ -19,6 +19,7 @@ const MultiLan = ({ id, head }) => {
   const [isVoting, setIsVoting] = useState(false);
   const [lan, setLan] = useState("");
   const [showForm, setShowForm] = useState(false);
+  const [userCredits, setUserCredits] = useState({});
 
   // deal with list refresh
   const handleRefresh = () => {
@@ -136,6 +137,37 @@ const MultiLan = ({ id, head }) => {
         throw new Error(error.message);
       }
 
+      // update user's credit
+      // Fetch the current credit value
+      const { data: userData, error: userFetchError } = await supabase
+        .from("users")
+        .select("credit")
+        .eq("email", user.email)
+        .single();
+
+      if (userFetchError) {
+        console.error("Error fetching user credit:", userFetchError.message);
+        throw new Error(userFetchError.message);
+      }
+
+      // Calculate the new credit value
+      const currentCredit = userData.credit;
+      const newCredit = increment ? currentCredit + 1 : currentCredit - 1;
+
+      // Update the user's credit
+      const { data: updatedData, error: creditError } = await supabase
+        .from("users")
+        .update({ credit: newCredit })
+        .eq("email", user.email)
+        .select();
+
+      if (creditError) {
+        console.error("Error updating credit:", creditError.message);
+        throw new Error(creditError.message);
+      }
+
+      console.log("User credit updated successfully:", updatedData);
+
       // 找到更新后的翻译项并更新状态
       const updatedTranslations = translations.map((translation) =>
         translation.id === id
@@ -173,73 +205,122 @@ const MultiLan = ({ id, head }) => {
         window.location.reload();
       }
     }
-  }
+  };
 
   const TransSection = () => {
-    return translations.map((item) => (
-      <div key={item.id} className="bg-light p-4 shadow rounded-3 mt-3">
-        <div className="d-flex">
-          {/* voting */}
-          <div className="px-2 me-3">
-            <div className="d-flex flex-column align-items-center gap-2">
-              <button
-                disabled={isVoting}
-                type="button"
-                className="btn btn-outline-dark rounded-4 m-0 py-0"
-                onClick={() => handleUpVote(item.id, item.vote_sub)}
-              >
-                <i className="fas fa-arrow-up fs-6 m-0 p-1"></i>
-              </button>
+    const [userCredits, setUserCredits] = useState({});
 
-              {/* NUM */}
-              <p className="m-0 fs-6">{item.vote_sub}</p>
+    useEffect(() => {
+      const fetchUserCredits = async () => {
+        try {
+          // Get unique user emails from translations
+          const userEmails = [
+            ...new Set(translations.map((item) => item.user_acct)),
+          ];
 
-              <button
-                disabled={isVoting}
-                type="button"
-                className="btn btn-outline-dark rounded-4 m-0 py-0"
-                onClick={() => handleDownVote(item.id, item.vote_sub)}
-              >
-                <i className="fas fa-arrow-down fs-6 m-0 p-1"></i>
-              </button>
-            </div>
+          // Fetch credit for each user
+          const { data: usersData, error: usersFetchError } = await supabase
+            .from("users")
+            .select("email, credit")
+            .in("email", userEmails);
+
+          if (usersFetchError) {
+            console.error("Error fetching users:", usersFetchError.message);
+            return;
+          }
+
+          // Create a mapping of email to credit
+          const creditMapping = {};
+          usersData.forEach((user) => {
+            creditMapping[user.email] = user.credit;
+          });
+
+          setUserCredits(creditMapping);
+        } catch (error) {
+          console.error("Error fetching user credits:", error.message);
+        }
+      };
+
+      fetchUserCredits();
+    }, [translations]);
+
+    return translations.map((item) => {
+      // why i can't declare a vairable here?
+      const isCredit = userCredits[item.user_acct] >= 100;
+      return  <div key={item.id} className="bg-light p-4 shadow rounded-3 mt-3">
+      <div className="d-flex">
+        {/* voting */}
+        <div className="px-2 me-3">
+          <div className="d-flex flex-column align-items-center gap-2">
+            <button
+              disabled={isVoting}
+              type="button"
+              className="btn btn-outline-dark rounded-4 m-0 py-0"
+              onClick={() => handleUpVote(item.id, item.vote_sub)}
+            >
+              <i className="fas fa-arrow-up fs-6 m-0 p-1"></i>
+            </button>
+
+            {/* NUM */}
+            <p className="m-0 fs-6">{item.vote_sub}</p>
+
+            <button
+              disabled={isVoting}
+              type="button"
+              className="btn btn-outline-dark rounded-4 m-0 py-0"
+              onClick={() => handleDownVote(item.id, item.vote_sub)}
+            >
+              <i className="fas fa-arrow-down fs-6 m-0 p-1"></i>
+            </button>
+          </div>
+        </div>
+
+        <div className="d-flex flex-column gap-5 w-100">
+          <div className="d-flex align-items-center gap-2 w-100">
+            {item.vote_sub <= -5 ? (
+              <span className="text-danger fw-bold">[⛔️DISPUTED] </span>
+            ) : (
+              ""
+            )}
+
+            <div className="fs-5">{item.text}</div>
           </div>
 
-          <div className="d-flex flex-column gap-5 w-100">
-            <div className="d-flex align-items-center gap-2 w-100">
-              {item.vote_sub <= -5 ? (
-                <span className="text-danger fw-bold">[⛔️DISPUTED] </span>
+          <div className="d-flex justify-content-between w-100 align-items-center">
+            <div className="text-secondary roboto-regular">
+              Contributed by{" "}
+              <span className="roboto-bold text-dark">{item.user_name}</span>
+              {item.user_acct === admin ? (
+                <i class="fa-solid fa-circle-user text-dark fs-6 ms-1"></i>
               ) : (
-                ""
+                <></>
               )}
-
-              <div className="fs-5">{item.text}</div>
-            </div>
-
-            <div className="d-flex justify-content-between w-100 align-items-center">
-              <div className="text-secondary roboto-regular">
-                Contributed by <span className="roboto-bold text-dark">{item.user_name}</span>
-              </div>
-
-              {/* del */}
-              {user?.email === admin ? (
-                <div>
-                  <button
-                    type="button"
-                    class="btn btn-danger"
-                    onClick={() => handelDel()}
-                  >
-                    Delete
-                  </button>
-                </div>
+              {isCredit ? (
+                <i class="fa-solid fa-star text-dark fs-6 ms-1"></i>
               ) : (
                 <></>
               )}
             </div>
+
+            {/* del */}
+            {user?.email === admin ? (
+              <div>
+                <button
+                  type="button"
+                  class="btn btn-danger"
+                  onClick={() => handelDel()}
+                >
+                  Delete
+                </button>
+              </div>
+            ) : (
+              <></>
+            )}
           </div>
         </div>
       </div>
-    ));
+    </div>;
+    });
   };
 
   return (

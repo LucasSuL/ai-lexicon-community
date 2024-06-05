@@ -12,6 +12,7 @@ export default function SinglePage() {
   const [isVoting, setIsVoting] = useState(false);
   const { id } = useParams();
   const navigateTo = useNavigate();
+  const [isCredit, setIsCredit] = useState(false);
 
   useEffect(() => {
     // This effect does nothing, but it triggers a re-render when user state changes
@@ -26,12 +27,9 @@ export default function SinglePage() {
   }
 
   const categoryObject = CATEGORIES.find(
-    (category) => category.name === fact.category
+    (category) => category.name === fact?.category
   );
   const categoryColor = categoryObject ? categoryObject.color : "#cccccc"; // Default color if category not found
-
-  // TODO
-  const isDisputed = false;
 
   const handleVote = async (increment) => {
     // Check if the user is logged in
@@ -89,11 +87,71 @@ export default function SinglePage() {
       return;
     }
 
+    // update user's credit
+    // Fetch the current credit value
+    const { data: userData, error: userFetchError } = await supabase
+      .from("users")
+      .select("credit")
+      .eq("email", user.email)
+      .single();
+
+    if (userFetchError) {
+      console.error("Error fetching user credit:", userFetchError.message);
+      throw new Error(userFetchError.message);
+    }
+
+    // Calculate the new credit value
+    const currentCredit = userData.credit;
+    const newCredit = increment ? currentCredit + 1 : currentCredit - 1;
+
+    // Update the user's credit
+    const { data: updatedData, error: creditError } = await supabase
+      .from("users")
+      .update({ credit: newCredit })
+      .eq("email", user.email)
+      .select();
+
+    if (creditError) {
+      console.error("Error updating credit:", creditError.message);
+      throw new Error(creditError.message);
+    }
+
+    console.log("User credit updated successfully:", updatedData);
+
     setIsVoting(false);
 
     // update value
     fact.votesMain = newVotesMain;
   };
+
+  useEffect(() => {
+    const checkUserCredit = async () => {
+      try {
+        // Fetch the user with the given email
+        const { data: userData, error: userFetchError } = await supabase
+          .from("users")
+          .select("credit")
+          .eq("email", fact.userAcct)
+          .single();
+
+        if (userFetchError) {
+          console.error("Error fetching user:", userFetchError.message);
+          throw new Error(userFetchError.message);
+        }
+
+        // Check if the credit value is greater than or equal to 100
+        const creditCheck = userData.credit >= 100;
+
+        console.log("User credit:", userData.credit, "isCredit:", creditCheck);
+
+        setIsCredit(creditCheck);
+      } catch (error) {
+        console.error("Error checking user credit:", error.message);
+      }
+    };
+
+    checkUserCredit();
+  }, [fact.userAcct, handleVote]); // Add fact.userAcct and handleVote as dependencies
 
   const handleUpVote = () => {
     handleVote(true);
@@ -116,7 +174,7 @@ export default function SinglePage() {
       } else {
         const { error1 } = await supabase.from("facts").delete().eq("id", id);
         if (error1) {
-          console.error("Error deleting fact:", error.message);
+          console.error("Error deleting fact:", error1.message);
         } else {
           console.log("Fact deleted successfully!");
           // push back to home page
@@ -135,7 +193,7 @@ export default function SinglePage() {
     <div className="container">
       <div className="bg-white shadow p-3 py-4 mt-3 rounded-4">
         {/* head */}
-        <h3 className="fw-bold font-ave-b mb-4">{fact.head}</h3>
+        <h3 className="fw-bold font-ave-b mb-4">{fact?.head}</h3>
 
         <div className="d-flex">
           {/* voting */}
@@ -171,13 +229,13 @@ export default function SinglePage() {
             </div>
 
             {/* text */}
-            <div className="mt-4">
-              {isDisputed ? (
-                <div className="text-danger fw-bold mb-2">[⛔️ DISPUTED] </div>
+            <div className="mt-4 d-flex align-items-center mb-3 gap-2">
+              {fact.votesMain <= -5 ? (
+                <div className="text-danger fw-bold">[⛔️ DISPUTED] </div>
               ) : (
                 ""
               )}
-              <p className="fs-5">{fact.text}</p>
+              <p className="fs-5 m-0">{fact.text}</p>
             </div>
 
             <div className="d-flex justify-content-between w-100 align-items-center">
@@ -185,6 +243,16 @@ export default function SinglePage() {
               <div className="text-secondary roboto-regular">
                 Contributed by{" "}
                 <span className="roboto-bold text-dark">{fact.user_name}</span>
+                {fact.userAcct === admin ? (
+                  <i class="fa-solid fa-circle-user text-dark fs-6 ms-1"></i>
+                ) : (
+                  <></>
+                )}
+                {isCredit ? (
+                  <i class="fa-solid fa-star text-dark fs-6 ms-1"></i>
+                ) : (
+                  <></>
+                )}
               </div>
               {/* del */}
               {user?.email === admin ? (

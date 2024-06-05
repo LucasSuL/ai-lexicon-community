@@ -68,6 +68,41 @@ export default function Form({ lan, head, id, onSubFormSubmit }) {
           throw new Error(error.message);
         }
 
+        // Fact inserted successfully, now update the user's post_head array
+        const { data: existingUser, error: userFetchError } = await supabase
+          .from("users")
+          .select("translations_text")
+          .eq("email", user.email)
+          .single();
+
+        if (userFetchError) {
+          console.error("Error fetching user:", userFetchError.message);
+          throw new Error(userFetchError.message);
+        }
+
+        // Append the new head to the post_head array
+        const updatedPostHead = existingUser.translations_text
+          ? [...existingUser.translations_text, translation_text]
+          : [translation_text];
+
+        // Update the user's post_head array in the database
+        const { data: updatedUser, error: userUpdateError } = await supabase
+          .from("users")
+          .update({ translations_text: updatedPostHead })
+          .eq("email", user.email)
+          .select();
+
+        if (userUpdateError) {
+          console.error("Error updating user:", userUpdateError.message);
+          throw new Error(userUpdateError.message);
+        }
+
+        console.log(
+          "New fact added and user updated successfully:",
+          translation_text,
+          updatedUser
+        );
+
         //4-reset input fields
         setTranslation_text("");
 

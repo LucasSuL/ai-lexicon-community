@@ -52,7 +52,10 @@ function PostProvider({ children, isLoaded, setIsLoaded }) {
         }
         // 根据搜索关键词进行筛选
         if (searchKeyword.trim() !== "") {
-          filteredQuery = filteredQuery.ilike("head_text", `%${searchKeyword}%`);
+          filteredQuery = filteredQuery.ilike(
+            "head_text",
+            `%${searchKeyword}%`
+          );
         }
 
         // 获取筛选后的数据
@@ -91,6 +94,8 @@ function PostProvider({ children, isLoaded, setIsLoaded }) {
       if (storedUser) {
         const userObj = JSON.parse(storedUser);
 
+        // console.log(userObj);
+
         // setUser immediately so that header can get the user picture.
         setUser(userObj);
 
@@ -103,7 +108,8 @@ function PostProvider({ children, isLoaded, setIsLoaded }) {
 
       /* global google */
       google.accounts.id.initialize({
-        client_id: "574847166176-q8555hjl1s1pctmqhk2klpq879degm3j.apps.googleusercontent.com",
+        client_id:
+          "574847166176-q8555hjl1s1pctmqhk2klpq879degm3j.apps.googleusercontent.com",
         callback: handleCallbackResponse,
       });
       google.accounts.id.renderButton(document.getElementById("signInDiv"), {
@@ -117,6 +123,45 @@ function PostProvider({ children, isLoaded, setIsLoaded }) {
       }
     });
   }, []);
+
+  // update USER db
+  useEffect(() => {
+    if (user) {
+      const updateDB = async () => {
+        console.log("Checking for existing user...");
+        const { data: existingUsers, error: existingUserError } = await supabase
+          .from("users")
+          .select("*")
+          .eq("email", user.email);
+
+        if (existingUserError) {
+          console.error(
+            "Error checking for existing user:",
+            existingUserError.message
+          );
+          return;
+        }
+
+        if (existingUsers && existingUsers.length > 0) {
+          console.log("User already exists in the database:", existingUsers[0]);
+        } else {
+          console.log("No existing user found. Adding new user...");
+          const { data, error } = await supabase
+            .from("users")
+            .insert([{ email: user.email }])
+            .select();
+
+          if (error) {
+            console.error("Error adding new user:", error.message);
+          } else {
+            console.log("New user added:", data);
+          }
+        }
+      };
+
+      updateDB();
+    }
+  }, [user]);
 
   function handleCallbackResponse(response) {
     const userObj = jwtDecode(response.credential);

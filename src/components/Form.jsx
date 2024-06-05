@@ -11,7 +11,6 @@ export default function Form() {
   const [formData, setFormData] = useState({
     name: "",
     fact: "",
-    // source: "",
     category: "",
     userAcct: "",
   });
@@ -79,20 +78,18 @@ export default function Form() {
           setFormData({
             head: "",
             fact: "",
-            // source: "",
             category: "",
           });
           return; // 中断表单提交
         }
 
         setIsUploading(true);
-        const { data: newFact, error } = await supabase
+        const { data: newFact, error: factError } = await supabase
           .from("facts")
           .insert([
             {
               head: formData.head,
               text: formData.fact,
-              // source: formData.source,
               category: formData.category,
               userAcct: user.email,
               user_name: user.name,
@@ -100,9 +97,45 @@ export default function Form() {
           ])
           .select();
 
-        if (error) {
-          throw new Error(error.message);
+        if (factError) {
+          console.error("Error inserting fact:", factError.message);
+          throw new Error(factError.message);
         }
+
+        // Fact inserted successfully, now update the user's post_head array
+        const { data: existingUser, error: userFetchError } = await supabase
+          .from("users")
+          .select("posts_head")
+          .eq("email", user.email)
+          .single();
+
+        if (userFetchError) {
+          console.error("Error fetching user:", userFetchError.message);
+          throw new Error(userFetchError.message);
+        }
+
+        // Append the new head to the post_head array
+        const updatedPostHead = existingUser.posts_head
+          ? [...existingUser.posts_head, formData.head]
+          : [formData.head];
+
+        // Update the user's post_head array in the database
+        const { data: updatedUser, error: userUpdateError } = await supabase
+          .from("users")
+          .update({ posts_head: updatedPostHead })
+          .eq("email", user.email)
+          .select();
+
+        if (userUpdateError) {
+          console.error("Error updating user:", userUpdateError.message);
+          throw new Error(userUpdateError.message);
+        }
+
+        console.log(
+          "New fact added and user updated successfully:",
+          newFact,
+          updatedUser
+        );
 
         //4-reset input fields
         setFormData({
@@ -179,25 +212,6 @@ export default function Form() {
           </div>
 
           <div className="col-12 col-md-6 ">
-            {/* <div className="mb-3">
-              <label htmlFor="source">Trustworthy Source</label>
-              <div className="input-group">
-                <span className="input-group-text mt-2" id="basic-addon3">
-                  https://
-                </span>
-
-                <input
-                  required
-                  aria-describedby="basic-addon3 basic-addon4"
-                  type="text"
-                  value={formData.source}
-                  name="source"
-                  onChange={handleChange}
-                  className="form-control mt-2"
-                  id="source"
-                />
-              </div>
-            </div> */}
             <div>
               <label htmlFor="category">Choose Category</label>
               <select
