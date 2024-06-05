@@ -6,8 +6,6 @@ import { usePosts } from "../provider/PostContext";
 import Loader from "../components/Loader";
 import FilterShow from "../components/FilterShow";
 import { Link } from "react-router-dom";
-import { Hit } from "../components/SearchBar";
-import { Hits } from "react-instantsearch-dom";
 
 export default function Content() {
   const { factList, isLoaded, setSelectedCategory, latest, popular } =

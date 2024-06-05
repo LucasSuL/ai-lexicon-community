@@ -45,7 +45,7 @@ const Footer = () => {
   return (
     <div className="container mb-5" id="about">
       <div className="row">
-        <div className="container mt-5 col-8" id="term">
+        <div className="container mt-5 col-12 col-xl-8" id="term">
           <p className="fs-5">Terms and conditions</p>
           <p className="text-secondary ">
             Terms and conditions: By using this community website, users agree
@@ -58,7 +58,7 @@ const Footer = () => {
             environment.
           </p>
         </div>
-        <div className="container mt-5 col-4">
+        <div className="container mt-5 col-12 col-xl-4">
           <p className="fs-5">Leave a message</p>
           <form action="" onSubmit={handlePost} novalidate>
             <textarea

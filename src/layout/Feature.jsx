@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import Form from "../components/Form";
 import SearchForm from "../components/SearchForm";
-import {SearchBar} from "../components/SearchBar";
 
 const Feature = () => {
   const [showForm, setShowForm] = useState(false);
