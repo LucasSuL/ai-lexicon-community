@@ -2,8 +2,7 @@ import React, { useEffect, useState } from "react";
 import { usePosts } from "../provider/PostContext";
 
 export default function Header() {
-
-  const {user, setUser} =  usePosts();
+  const { user, setUser } = usePosts();
 
   function handleSignOut(e) {
     // 清除会话存储中的用户信息
@@ -22,12 +21,13 @@ export default function Header() {
   return (
     <nav className="navbar navbar-expand-lg">
       <div className="container-fluid">
-
-          {/* 设置绝对路径，handle github.io 上的路径问题 */}
+        {/* 设置绝对路径，handle github.io 上的路径问题 */}
         <a className="navbar-brand" href="/ai-lexicon-community/">
-          
           <div className="d-flex align-items-center">
-            <img src="/ai-lexicon-community/logo.png" className="ms-0 logo me-3" />
+            <img
+              src="/ai-lexicon-community/logo.png"
+              className="ms-0 logo me-3"
+            />
             <p className="fw-bold text-dark m-0 fs-4 text-uppercase d-none d-sm-block font-ave-b">
               AI Lexicon Community
             </p>
@@ -50,7 +50,11 @@ export default function Header() {
         >
           <ul className="navbar-nav mb-2 mb-lg-0">
             <li className="nav-item">
-              <a className="nav-link active" aria-current="page" href="/ai-lexicon-community/">
+              <a
+                className="nav-link active"
+                aria-current="page"
+                href="/ai-lexicon-community/"
+              >
                 Home
               </a>
             </li>
@@ -64,44 +68,45 @@ export default function Header() {
                 About
               </a>
             </li>
+
             <div className="ms-2" id="signInDiv"></div>
 
             {user && (
-              <div className="ms-3 d-flex align-items-center gap-2 ">
-                <p className="m-0"> Hello {user.name}!</p>
+                <div className="ms-3 d-flex align-items-center gap-2 justify-content-center">
+                  <p className="m-0"> Hello {user.name}!</p>
 
-                <div className="dropdown">
-                  <a
-                    className="btn dropdown-toggle p-0"
-                    href="#"
-                    role="button"
-                    data-bs-toggle="dropdown"
-                    aria-expanded="false"
-                  >
-                    <img
-                      className="rounded-5 m-0"
-                      src={user.picture}
-                      style={{ maxWidth: "35px", maxHeight: "35px" }}
-                    ></img>
-                  </a>
+                  <div className="dropdown">
+                    <a
+                      className="btn dropdown-toggle p-0"
+                      href="#"
+                      role="button"
+                      data-bs-toggle="dropdown"
+                      aria-expanded="false"
+                    >
+                      <img
+                        className="rounded-5 m-0"
+                        src={user.picture}
+                        style={{ maxWidth: "35px", maxHeight: "35px" }}
+                      ></img>
+                    </a>
 
-                  <ul className="dropdown-menu dropdown-menu-end">
-                    <p className="dropdown-item text-secondary m-0">
-                      {user.email}
-                    </p>
-                    <div className="dropdown-item" href="#">
-                      <button
-                        type="button"
-                        className="btn btn-danger w-100"
-                        onClick={(e) => handleSignOut(e)}
-                      >
-                        Sign Out
-                      </button>
-                      {/* )} */}
-                    </div>
-                  </ul>
+                    <ul className="dropdown-menu dropdown-menu-end">
+                      <p className="dropdown-item text-secondary m-0">
+                        {user.email}
+                      </p>
+                      <div className="dropdown-item" href="#">
+                        <button
+                          type="button"
+                          className="btn btn-danger w-100"
+                          onClick={(e) => handleSignOut(e)}
+                        >
+                          Sign Out
+                        </button>
+                        {/* )} */}
+                      </div>
+                    </ul>
+                  </div>
                 </div>
-              </div>
             )}
           </ul>
         </div>
