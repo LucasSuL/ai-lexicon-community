@@ -222,7 +222,7 @@ const MultiLan = ({ id, head }) => {
               </div>
 
               {/* del */}
-              {user.email === admin ? (
+              {user?.email === admin ? (
                 <div>
                   <button
                     type="button"

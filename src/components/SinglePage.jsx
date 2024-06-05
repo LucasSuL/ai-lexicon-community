@@ -186,7 +186,7 @@ export default function SinglePage() {
                 Contributed by {fact.user_name}
               </div>
               {/* del */}
-              {user.email === admin ? (
+              {user?.email === admin ? (
                 <div>
                   <button
                     type="button"
