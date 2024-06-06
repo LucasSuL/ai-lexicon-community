@@ -239,21 +239,29 @@ export default function SinglePage() {
             </div>
 
             <div className="d-flex justify-content-between w-100 align-items-center">
-              {/* user */}
-              <div className="text-secondary roboto-regular">
-                Contributed by{" "}
-                <span className="roboto-bold text-dark">{fact.user_name}</span>
-                {fact.userAcct === admin ? (
-                  <i class="fa-solid fa-circle-user text-dark fs-6 ms-1"></i>
-                ) : (
-                  <></>
-                )}
-                {isCredit ? (
-                  <i class="fa-solid fa-star text-dark fs-6 ms-1"></i>
-                ) : (
-                  <></>
-                )}
+              <div>
+                {/* user */}
+                <div className="text-secondary roboto-regular">
+                  Posted by{" "}
+                  <span className="roboto-bold text-dark">
+                    {fact.user_name}
+                  </span>
+                  {fact.userAcct === admin ? (
+                    <i class="fa-solid fa-circle-user text-dark fs-6 ms-1"></i>
+                  ) : (
+                    <></>
+                  )}
+                  {isCredit ? (
+                    <i class="fa-solid fa-star text-dark fs-6 ms-1"></i>
+                  ) : (
+                    <></>
+                  )}
+                </div>
+                <div className="text-secondary roboto-regular mt-1">
+                  Created at {fact.created_at.slice(0, 10)}
+                </div>
               </div>
+
               {/* del */}
               {user?.email === admin ? (
                 <div>
