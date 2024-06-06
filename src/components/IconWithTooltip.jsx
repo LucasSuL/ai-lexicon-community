@@ -12,7 +12,7 @@ const IconWithTooltip = ({icon}) => {
       onMouseEnter={() => setShowTooltip(true)}
       onMouseLeave={() => setShowTooltip(false)}
     >
-      <i class={`fa-solid fa-${icon} text-success fs-6 ms-1`}></i>
+      <i className={`fa-solid fa-${icon} text-success fs-6 ms-1`}></i>
       
       {showTooltip && admin && <div className="tooltip">This is an administrator.</div>}
       {showTooltip && !admin && <div className="tooltip">This is a verified user.</div>}

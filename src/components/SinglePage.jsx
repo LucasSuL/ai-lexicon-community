@@ -264,7 +264,7 @@ export default function SinglePage() {
                 <div>
                   <button
                     type="button"
-                    class="btn btn-danger"
+                    className="btn btn-danger"
                     onClick={() => handelDel()}
                   >
                     Delete

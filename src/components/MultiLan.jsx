@@ -311,7 +311,7 @@ const MultiLan = ({ id, head }) => {
                   <div>
                     <button
                       type="button"
-                      class="btn btn-danger"
+                      className="btn btn-danger"
                       onClick={() => handelDel()}
                     >
                       Delete

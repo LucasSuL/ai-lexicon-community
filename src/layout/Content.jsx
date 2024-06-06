@@ -103,7 +103,7 @@ export default function Content() {
                         </p>
                         <Link
                           to={`/ai-lexicon-community/entries/${item.id}`}
-                          class="link-dark link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover"
+                          className="link-dark link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover"
                         >
                           {item.head}
                         </Link>
@@ -133,7 +133,6 @@ export default function Content() {
                 </a>
               </div>
             </div>
-            
           </div>
         </div>
       </div>

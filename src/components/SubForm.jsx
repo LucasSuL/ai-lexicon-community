@@ -137,12 +137,12 @@ export default function Form({ lan, head, id, onSubFormSubmit }) {
         <div className="row">
           <div className="col-6 ">
             <div className="mb-3">
-              <label for="validationCustom01" class="form-label">
+              <label for="validationCustom01" className = "form-label">
                 Your translation
               </label>
               <input
                 type="text"
-                class="form-control"
+                className = "form-control"
                 id="validationCustom01"
                 value={translation_text}
                 onChange={handleChange}
@@ -150,24 +150,24 @@ export default function Form({ lan, head, id, onSubFormSubmit }) {
               />
             </div>
           </div>
-          <div class="col-12">
-            <div class="form-check">
+          <div className = "col-12">
+            <div className = "form-check">
               <input
-                class="form-check-input"
+                className = "form-check-input"
                 type="checkbox"
                 value=""
                 id="invalidCheck"
                 required
               />
-              <label class="form-check-label" for="invalidCheck">
+              <label className = "form-check-label" for="invalidCheck">
                 Agree to terms and conditions.
               </label>
-              <div class="invalid-feedback">
+              <div className = "invalid-feedback">
                 You must agree before submitting.
               </div>
               <a
                 href="#term"
-                class="link-dark link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover ms-2"
+                className = "link-dark link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover ms-2"
               >
                 (See more)
               </a>

@@ -251,13 +251,13 @@ export default function Form() {
                   </a>
                 </p>
               </label>
-              <div class="invalid-feedback">
+              <div className="invalid-feedback">
                 You must agree before submitting.
               </div>
 
               <a
                 href="#term"
-                class="link-dark link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover"
+                className="link-dark link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover"
               >
                 (See more)
               </a>
