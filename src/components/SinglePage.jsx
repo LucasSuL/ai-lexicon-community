@@ -6,6 +6,7 @@ import { usePosts } from "../provider/PostContext.jsx";
 import MultiLan from "./MultiLan.jsx";
 import supabase, { admin } from "../database.js";
 import { useNavigate } from "react-router-dom";
+import IconWithTooltip from "./IconWithTooltip.jsx";
 
 export default function SinglePage() {
   const { user, factList, latest } = usePosts();
@@ -247,15 +248,11 @@ export default function SinglePage() {
                     {fact.user_name}
                   </span>
                   {fact.userAcct === admin ? (
-                    <i class="fa-solid fa-circle-user text-dark fs-6 ms-1"></i>
+                    <IconWithTooltip icon="circle-user" />
                   ) : (
                     <></>
                   )}
-                  {isCredit ? (
-                    <i class="fa-solid fa-star text-dark fs-6 ms-1"></i>
-                  ) : (
-                    <></>
-                  )}
+                  {isCredit ? <IconWithTooltip icon="star" /> : <></>}
                 </div>
                 <div className="text-secondary roboto-regular mt-1">
                   Created at {fact.created_at.slice(0, 10)}

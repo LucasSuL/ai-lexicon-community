@@ -11,6 +11,7 @@ import jp from "/flags/jp.png";
 import kr from "/flags/kr.png";
 import vn from "/flags/vn.png";
 import { usePosts } from "../provider/PostContext";
+import IconWithTooltip from "./IconWithTooltip";
 
 const MultiLan = ({ id, head }) => {
   const { user } = usePosts();
@@ -294,15 +295,11 @@ const MultiLan = ({ id, head }) => {
                       {item.user_name}
                     </span>
                     {item.user_acct === admin ? (
-                      <i class="fa-solid fa-circle-user text-dark fs-6 ms-1"></i>
+                      <IconWithTooltip icon="circle-user" />
                     ) : (
                       <></>
                     )}
-                    {isCredit ? (
-                      <i class="fa-solid fa-star text-dark fs-6 ms-1"></i>
-                    ) : (
-                      <></>
-                    )}
+                    {isCredit ? <IconWithTooltip icon="star" /> : <></>}
                   </div>
                   <div className="text-secondary roboto-regular mt-1">
                     Created at {item.created_at.slice(0, 10)}
