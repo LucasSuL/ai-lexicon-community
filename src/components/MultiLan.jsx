@@ -191,12 +191,13 @@ const MultiLan = ({ id, head }) => {
     handleVote(id, vote_sub, false);
   };
 
-  const handelDel = async () => {
+  const handelDel = async (itemText) => {
+    console.log(itemText);
     if (window.confirm("Are you sure you want to delete?")) {
       const { error } = await supabase
         .from("translations")
         .delete()
-        .eq("fact_id", id);
+        .eq("text", itemText);
 
       if (error) {
         console.error("Error deleting translations:", error.message);
@@ -312,7 +313,7 @@ const MultiLan = ({ id, head }) => {
                     <button
                       type="button"
                       className="btn btn-danger"
-                      onClick={() => handelDel()}
+                      onClick={() => handelDel(item.text)}
                     >
                       Delete
                     </button>
