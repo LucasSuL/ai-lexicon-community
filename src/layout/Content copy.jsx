@@ -60,16 +60,6 @@ export default function Content() {
             {/* side display */}
             <div className="tags col-12 col-xl-3 d-flex flex-column">
               <div className="mx-2">
-                {/* selection button */}
-                <div className="fs-4">Tags</div>
-                <button
-                  className="btn btn-all m-2 tag text-light fw-bold mb-3 text-bg-dark shadow w-100"
-                  onClick={handleAllClick}
-                >
-                  All
-                </button>
-                <div className="row m-0 g-3 mb-3">{tags}</div>
-
                 {/* latest */}
                 <div className="fs-4">Latest Posts</div>
                 <div className="mt-2">
@@ -122,6 +112,18 @@ export default function Content() {
                   })}
                 </div>
               </div>
+
+              {/* selection button */}
+              <div className="mx-2">
+                <div className="fs-4 mt-5">Tags</div>
+              </div>
+              <button
+                className="btn btn-all m-2 tag text-light fw-bold mb-3 text-bg-dark shadow"
+                onClick={handleAllClick}
+              >
+                All
+              </button>
+              <div className="row m-0 g-3 mb-3">{tags}</div>
             </div>
 
             <div className="container ">
