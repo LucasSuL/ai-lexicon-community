@@ -213,7 +213,7 @@ export default function Form() {
 
           <div className="col-12 col-md-6 ">
             <div>
-              <label htmlFor="category">Choose Category</label>
+              <label htmlFor="category">Choose Target Language</label>
               <select
                 required
                 className="form-select mt-2"
@@ -223,7 +223,7 @@ export default function Form() {
                 onChange={handleChange}
               >
                 <option disabled value="">
-                  Chooose Category
+                  Target Language
                 </option>
                 {optionList}
               </select>

@@ -1,13 +1,13 @@
 {
   "CATEGORIES": [
-    { "name": "Machine Learning", "color": "#57c4ff31" },
-    { "name": "Reinforcement Learning", "color": "#da85c731" },
-    { "name": "Computer Vision", "color": "#7fb88133" },
-    { "name": "Expert Systems", "color": "#ff795736" },
-    { "name": "Speech Recognition", "color": "#ffb04f45" },
-    { "name": "Robotics", "color": "#5e4fff31" },
-    { "name": "Natural Language Processing", "color": "#ff84cc31" },
-    { "name": "AI Ethics and Societal Impact", "color": "#a833ff31" }
+    { "name": "Chinese Simplified", "color": "#57c4ff31" },
+    { "name": "French", "color": "#da85c731" },
+    { "name": "German", "color": "#7fb88133" },
+    { "name": "Italian", "color": "#ff795736" },
+    { "name": "Japanese", "color": "#ffb04f45" },
+    { "name": "Korean", "color": "#5e4fff31" },
+    { "name": "Spanish", "color": "#ff84cc31" },
+    { "name": "Vietnamese", "color": "#a833ff31" }
   ]
 }
 
