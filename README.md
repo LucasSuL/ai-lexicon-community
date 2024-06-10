@@ -10,15 +10,14 @@ Currently, two official plugins are available:
 
 ## Clone to local repo
 
-`git clone https://github.cs.adelaide.edu.au/MCI-Projects-2024/Team-12.git`
+`git clone https://github.com/LucasSuL/ai-lexicon-community.git`
 
 ## Install packages
 
-`cd Team-12` to the project root folder, and then
-`cd code` to the code folder.
+`cd ai-lexicon-community` to the project root folder, and then
 
-Use `npm i` to install necessary packages.
+Use `npm i` to install the necessary packages.
 
 ## Run locally
 
-`npm run dev` and then `ctrl` + click the link provided in the terminal by vite to open the application.
+`npm run dev` and then `ctrl` + click the link provided in the terminal by vite to open the application. By default, Vite should be at port 5173.
