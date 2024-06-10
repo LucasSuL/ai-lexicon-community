@@ -89,12 +89,12 @@ const Footer = () => {
         <p className="text-secondary me-2">A project by</p>
         <p className="m-0">
           <a
-            href="https://github.cs.adelaide.edu.au/MCI-Projects-2024/Team-12"
+            href="www.linkedin.com/in/lucassudev"
             className="link-dark link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover fw-bold"
             target="_blank"
             rel="noreferrer"
           >
-            Group 12-D
+            Lucas Su
           </a>
         </p>
       </div>
